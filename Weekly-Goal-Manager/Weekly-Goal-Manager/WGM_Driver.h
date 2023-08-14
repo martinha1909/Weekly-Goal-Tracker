@@ -8,6 +8,8 @@ private:
 	int nFieldWidth = 10;
 	int nFieldHeight = 10;
 	wxButton** btns = nullptr;
+	int* nField = nullptr;
+	bool bFirstClick = true;
 public:
 	WGM_Driver();
 	~WGM_Driver();
