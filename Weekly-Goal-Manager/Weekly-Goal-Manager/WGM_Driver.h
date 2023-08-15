@@ -1,20 +1,27 @@
 #pragma once
 
 #include "wx/wx.h"
+#include "wx/menu.h"
+
+#define ADD_GOAL_BTN_ID 10001
 
 class WGM_Driver : public wxFrame
 {
 private:
-	int nFieldWidth = 10;
-	int nFieldHeight = 10;
-	wxButton** btns = nullptr;
-	int* nField = nullptr;
-	bool bFirstClick = true;
+	std::vector<wxButton*> btns;
+	wxBoxSizer* main_sizer = nullptr;
+	wxBoxSizer* top_sizer = nullptr;
+	wxPanel* btn_panel = nullptr;
+	wxButton* add_goal_btn = nullptr;
+	wxBoxSizer* btn_sizer = nullptr;
+	wxBoxSizer* center_sizer = nullptr;
+
+	void setUpDefaultButtons();
 public:
 	WGM_Driver();
 	~WGM_Driver();
 
 	void onButtonClicked(wxCommandEvent& event);
-	wxDECLARE_EVENT_TABLE();
+	void addGoalBtnClicked(wxCommandEvent& event);
 };
 
