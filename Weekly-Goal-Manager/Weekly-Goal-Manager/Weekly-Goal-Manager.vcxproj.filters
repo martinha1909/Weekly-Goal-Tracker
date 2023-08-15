@@ -21,12 +21,18 @@
     <ClInclude Include="WGM_Driver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WGM_App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WGM_Driver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
