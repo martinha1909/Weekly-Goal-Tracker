@@ -50,6 +50,9 @@ void WGM_Driver::setUpDefaultButtons()
 
 void WGM_Driver::addGoalBtnClicked(wxCommandEvent& event)
 {
+    Goal* goal = new Goal();
+
+    goal->Show();
     event.Skip();
 }
 

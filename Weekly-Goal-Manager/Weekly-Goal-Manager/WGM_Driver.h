@@ -1,6 +1,6 @@
 #pragma once
 
-#include "wx/wx.h"
+#include "Goal.h"
 #include "wx/menu.h"
 
 #define ADD_GOAL_BTN_ID 10001
