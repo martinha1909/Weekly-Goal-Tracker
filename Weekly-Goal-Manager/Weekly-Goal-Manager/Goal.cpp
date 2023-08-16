@@ -1,25 +1,45 @@
 #include "Goal.h"
 
-Goal::Goal() : wxFrame(nullptr, wxID_ANY, "Add Goal", wxDefaultPosition, wxSize(1000, 800))
+Goal::Goal() : wxFrame(nullptr, wxID_ANY, "Add Goal", wxDefaultPosition, wxSize(500, 500))
 {
-    // Create the main sizer for the frame
+    this->CenterOnScreen();
+    this->SetBackgroundColour(APP_BACKGROUND_COLOUR);
+
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
 
-    // Create a text box for entering the goal name
-    wxTextCtrl* goalTextBox = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+    // Create a panel to hold the text boxes
+    wxPanel* panel = new wxPanel(this, wxID_ANY);
 
-    // Add the text box to the main sizer
-    mainSizer->Add(goalTextBox, 0, wxALL | wxEXPAND, 10);
+    // Create vertical sizer for the panel
+    wxBoxSizer* panelSizer = new wxBoxSizer(wxVERTICAL);
 
-    // Create a button to confirm and add the goal
-    wxButton* addButton = new wxButton(this, wxID_ANY, "Add Goal");
-    addButton->Bind(wxEVT_BUTTON, &Goal::onButtonClicked, this); // Bind the event handler
+    // Add a flexible space to center-align the text boxes vertically
+    panelSizer->AddStretchSpacer(1);
 
-    // Add the button to the main sizer
-    mainSizer->Add(addButton, 0, wxALIGN_CENTER | wxTOP | wxBOTTOM, 10);
+    // Add three text boxes
+    for (int i = 0; i < 3; i++)
+    {
+        wxFont titleFont(wxFontInfo(10).Family(wxFONTFAMILY_DEFAULT).FaceName("Roboto").Bold());
+        wxStaticText* titleText = new wxStaticText(panel, wxID_ANY, wxString::Format("TextBox %d", i + 1));
+        titleText->SetForegroundColour(wxColour(51, 51, 51));
+        titleText->SetFont(titleFont);
+        panelSizer->Add(titleText, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
 
-    // Set the main sizer for the frame
-    SetSizerAndFit(mainSizer);
+        wxTextCtrl* textBox = new wxTextCtrl(panel, wxID_ANY, wxEmptyString,
+            wxDefaultPosition, wxDefaultSize);
+        panelSizer->Add(textBox, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
+    }
+
+    // Add another flexible space to center-align the text boxes vertically
+    panelSizer->AddStretchSpacer(1);
+
+    // Set the panel's sizer
+    panel->SetSizer(panelSizer);
+
+    // Add the panel to the main sizer
+    mainSizer->Add(panel, 1, wxEXPAND);
+    
+    this->SetSizer(mainSizer);
 }
 
 Goal::~Goal()

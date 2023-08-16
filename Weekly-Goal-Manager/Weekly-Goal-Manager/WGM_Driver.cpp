@@ -5,7 +5,8 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxD
     // Calculate the height for the top section (20% of the frame height)
     int topSectionHeight = GetSize().GetHeight() * 0.2;
 
-    CenterOnScreen();
+    this->CenterOnScreen();
+    this->SetBackgroundColour(APP_BACKGROUND_COLOUR);
 
     main_sizer = new wxBoxSizer(wxVERTICAL);
     top_sizer = new wxBoxSizer(wxHORIZONTAL);

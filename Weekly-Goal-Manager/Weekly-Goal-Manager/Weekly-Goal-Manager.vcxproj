@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="WGM_App.h" />
     <ClInclude Include="WGM_Driver.h" />
