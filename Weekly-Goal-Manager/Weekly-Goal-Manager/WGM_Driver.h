@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Goal.h"
+#include "AddGoal.h"
 #include "wx/menu.h"
-
+#include "wx/log.h"
 
 class WGM_Driver : public wxFrame
 {
@@ -23,6 +23,7 @@ public:
 	~WGM_Driver();
 
 	void addGoalMenuSelected(wxCommandEvent& event);
+	void appendGoal(const wxString& new_goal);
 
 	wxDECLARE_EVENT_TABLE();
 };

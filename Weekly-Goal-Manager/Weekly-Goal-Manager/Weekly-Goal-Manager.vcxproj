@@ -20,12 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="Goal.h" />
+    <ClInclude Include="AddGoal.h" />
     <ClInclude Include="WGM_App.h" />
     <ClInclude Include="WGM_Driver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="AddGoal.cpp" />
     <ClCompile Include="WGM_App.cpp" />
     <ClCompile Include="WGM_Driver.cpp" />
   </ItemGroup>
