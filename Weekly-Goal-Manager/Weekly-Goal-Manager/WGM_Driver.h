@@ -3,7 +3,6 @@
 #include "Goal.h"
 #include "wx/menu.h"
 
-#define ADD_GOAL_BTN_ID 10001
 
 class WGM_Driver : public wxFrame
 {
@@ -15,13 +14,16 @@ private:
 	wxButton* add_goal_btn = nullptr;
 	wxBoxSizer* btn_sizer = nullptr;
 	wxBoxSizer* center_sizer = nullptr;
+	wxMenuBar* menu_bar = nullptr;
+	wxMenu* menu = nullptr;
 
 	void setUpDefaultButtons();
 public:
 	WGM_Driver();
 	~WGM_Driver();
 
-	void onButtonClicked(wxCommandEvent& event);
-	void addGoalBtnClicked(wxCommandEvent& event);
+	void addGoalMenuSelected(wxCommandEvent& event);
+
+	wxDECLARE_EVENT_TABLE();
 };
 

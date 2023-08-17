@@ -1,5 +1,9 @@
 #include "WGM_Driver.h"
 
+wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
+EVT_MENU(ADD_GOAL_MENU_ID, WGM_Driver::addGoalMenuSelected)
+wxEND_EVENT_TABLE()
+
 WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxDefaultPosition, wxSize(1000, 800))
 {
     // Calculate the height for the top section (20% of the frame height)
@@ -8,13 +12,17 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxD
     this->CenterOnScreen();
     this->SetBackgroundColour(APP_BACKGROUND_COLOUR);
 
-    main_sizer = new wxBoxSizer(wxVERTICAL);
-    top_sizer = new wxBoxSizer(wxHORIZONTAL);
+    menu_bar = new wxMenuBar();
+    menu = new wxMenu();
+    menu->Append(ADD_GOAL_MENU_ID, "Add Goal");
+    menu_bar->Append(menu, "Trajectory");
+    this->SetMenuBar(menu_bar);
 
     setUpDefaultButtons();
 
+    main_sizer = new wxBoxSizer(wxVERTICAL);
+    top_sizer = new wxBoxSizer(wxHORIZONTAL);
     main_sizer->Add(top_sizer, 0, wxEXPAND);
-
     center_sizer = new wxBoxSizer(wxHORIZONTAL);
     center_sizer->AddStretchSpacer();
     center_sizer->Add(btn_panel, 0, wxALIGN_CENTER);
@@ -38,10 +46,6 @@ void WGM_Driver::setUpDefaultButtons()
     btns.push_back(new wxButton(btn_panel, 1, "Finance"));
     btns.push_back(new wxButton(btn_panel, 2, "LeetCode"));
 
-    add_goal_btn = new wxButton(this, ADD_GOAL_BTN_ID, "Add Goal", wxPoint(915, 0));
-    add_goal_btn->SetSize(wxSize(70, 20));
-    add_goal_btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &WGM_Driver::addGoalBtnClicked, this);
-
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
     for (size_t i = 0; i < btns.size(); i++) {
         btn_sizer->Add(btns[i], 1, wxALL, 10);
@@ -49,15 +53,10 @@ void WGM_Driver::setUpDefaultButtons()
     btn_panel->SetSizer(btn_sizer);
 }
 
-void WGM_Driver::addGoalBtnClicked(wxCommandEvent& event)
+void WGM_Driver::addGoalMenuSelected(wxCommandEvent& event)
 {
     Goal* goal = new Goal();
 
     goal->Show();
     event.Skip();
-}
-
-void WGM_Driver::onButtonClicked(wxCommandEvent& event)
-{
-	event.Skip();
 }
