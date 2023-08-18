@@ -1,8 +1,9 @@
 #pragma once
 
-#include "wx/menu.h"
-#include "wx/log.h"
-#include "AddGoal.h"
+#include <wx/menu.h>
+#include <wx/log.h>
+#include <wx/wx.h>
+#include "GUI/AddGoal/include/AddGoal.h"
 
 class WGM_Driver : public wxFrame
 {

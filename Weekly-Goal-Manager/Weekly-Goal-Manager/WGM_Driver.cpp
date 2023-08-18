@@ -1,5 +1,6 @@
 #include "WGM_Driver.h"
-#include "WGM_Button.h"
+#include "GUI/Components/WGM_Button/include/WGM_Button.h"
+#include "Constants.h"
 
 wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
 EVT_MENU(ADD_GOAL_MENU_ID, WGM_Driver::addGoalMenuSelected)

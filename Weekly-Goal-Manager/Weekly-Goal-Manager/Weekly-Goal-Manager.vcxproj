@@ -20,15 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="AddGoal.h" />
+    <ClInclude Include="GUI/AddGoal/include/AddGoal.h" />
     <ClInclude Include="WGM_App.h" />
-    <ClInclude Include="WGM_Button.h" />
+    <ClInclude Include="GUI/Components/WGM_Button/include/WGM_Button.h" />
     <ClInclude Include="WGM_Driver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AddGoal.cpp" />
+    <ClCompile Include="GUI/AddGoal/AddGoal.cpp" />
     <ClCompile Include="WGM_App.cpp" />
-    <ClCompile Include="WGM_Button.cpp" />
+    <ClCompile Include="GUI/Components/WGM_Button/WGM_Button.cpp" />
     <ClCompile Include="WGM_Driver.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
