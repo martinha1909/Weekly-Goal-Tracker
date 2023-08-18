@@ -7,7 +7,6 @@ class WGM_Goal_Button : public WGM_Button
 {
 private:
 	Goal* goal;
-
 public:
 	WGM_Goal_Button(wxPanel* panel, const wxWindowID id, const char* name);
 	WGM_Goal_Button(wxPanel* panel, const wxWindowID id, Goal* goal);

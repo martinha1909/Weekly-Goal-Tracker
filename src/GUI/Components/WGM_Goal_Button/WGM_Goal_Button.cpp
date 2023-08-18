@@ -1,5 +1,7 @@
 #include "include/WGM_Goal_Button.h"
 #include <wx/wx.h>
+#include <wx/button.h>
+#include <wx/dcclient.h>
 
 WGM_Goal_Button::WGM_Goal_Button(wxPanel* panel, const wxWindowID id, const char* name) : WGM_Button(panel, id, wxString(name, wxConvUTF8))
 {

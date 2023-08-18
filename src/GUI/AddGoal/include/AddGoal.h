@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../Driver/WGM_Driver/include/WGM_Driver.h"
+#include "../../Components/WGM_StaticText/include/WGM_StaticText.h"
 #include <wx/wx.h>
 
 class WGM_Driver;
@@ -12,7 +13,7 @@ private:
 	wxBoxSizer* main_sizer = nullptr;
 	wxPanel* panel = nullptr;
 	wxBoxSizer* panel_sizer = nullptr;
-	wxStaticText* goal_category_title = nullptr;
+	WGM_StaticText* goal_category_title = nullptr;
 	wxTextCtrl* text_box = nullptr;
 public:
 	AddGoal(WGM_Driver* driver);

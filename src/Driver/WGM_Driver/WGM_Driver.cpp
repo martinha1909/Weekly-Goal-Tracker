@@ -47,9 +47,9 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    btns.push_back(new WGM_Goal_Button(btn_panel, 0, "Fitness"));
-    btns.push_back(new WGM_Goal_Button(btn_panel, 1, "Finance"));
-    btns.push_back(new WGM_Goal_Button(btn_panel, 2, "LeetCode"));
+    btns.push_back(new WGM_Goal_Button(btn_panel, 0, new Goal("Fitness"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    btns.push_back(new WGM_Goal_Button(btn_panel, 1, new Goal("Finance"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    btns.push_back(new WGM_Goal_Button(btn_panel, 2, new Goal("LeetCode"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
 
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
     for (size_t i = 0; i < btns.size(); i++) {

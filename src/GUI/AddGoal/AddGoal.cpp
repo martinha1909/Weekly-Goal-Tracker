@@ -6,8 +6,6 @@
 
 AddGoal::AddGoal(WGM_Driver* driver) : wxFrame(nullptr, wxID_ANY, "Add Goal", wxDefaultPosition, ADD_GOAL_FRAME_SIZE)
 {
-    wxFont goal_category_title_font(wxFontInfo(10).Family(wxFONTFAMILY_DEFAULT).FaceName("Roboto").Bold());
-
     this->driver = driver;
     this->CenterOnScreen();
     this->SetBackgroundColour(APP_BACKGROUND_COLOUR);
@@ -18,9 +16,7 @@ AddGoal::AddGoal(WGM_Driver* driver) : wxFrame(nullptr, wxID_ANY, "Add Goal", wx
     panel_sizer = new wxBoxSizer(wxVERTICAL);
     panel_sizer->AddStretchSpacer(1);
 
-    goal_category_title = new wxStaticText(panel, wxID_ANY, wxString("Goal Category"));
-    goal_category_title->SetForegroundColour(wxColour(255, 255, 255));
-    goal_category_title->SetFont(goal_category_title_font);
+    goal_category_title = new WGM_StaticText(panel, wxID_ANY, wxString("Goal Category"));
     panel_sizer->Add(goal_category_title, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
 
     text_box = new WGM_TextCtrl(panel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(150, 20), wxBORDER_NONE | wxTE_PROCESS_ENTER);
