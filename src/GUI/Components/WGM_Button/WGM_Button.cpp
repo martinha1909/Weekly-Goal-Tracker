@@ -23,7 +23,7 @@ WGM_Button::~WGM_Button()
 
 void WGM_Button::setDefault()
 {
-	this->SetBackgroundColour(DEFAULT_ITEM_BACKGROUND_COLOUR);
-	this->SetForegroundColour(DEFAULT_ITEM_FOREGROUND_COLOUR);
+	this->SetBackgroundColour(BUTTON_BACKGROUND_COLOUR);
+	this->SetForegroundColour(BUTTON_FOREGROUND_COLOUR);
 	this->SetFont(APP_BUTTON_FONT);
 }

@@ -18,6 +18,6 @@ WGM_TextCtrl::~WGM_TextCtrl()
 
 void WGM_TextCtrl::setDefault()
 {
-	this->SetBackgroundColour(DEFAULT_ITEM_BACKGROUND_COLOUR);
-	this->SetForegroundColour(DEFAULT_ITEM_FOREGROUND_COLOUR);
+	this->SetBackgroundColour(TEXT_BOX_BACKGROUND_COLOUR);
+	this->SetForegroundColour(TEXT_BOX_FOREGROUND_COLOUR);
 }

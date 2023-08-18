@@ -13,6 +13,6 @@ WGM_StaticText::~WGM_StaticText()
 
 void WGM_StaticText::setDefault()
 {
-	this->SetForegroundColour(DEFAULT_ITEM_FOREGROUND_COLOUR);
+	this->SetForegroundColour(TEXT_BOX_FOREGROUND_COLOUR);
 	this->SetFont(APP_TEXT_BOX_FONT);
 }
