@@ -1,4 +1,5 @@
 #include "WGM_Driver.h"
+#include "WGM_Button.h"
 
 wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
 EVT_MENU(ADD_GOAL_MENU_ID, WGM_Driver::addGoalMenuSelected)
@@ -45,9 +46,9 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    btns.push_back(new wxButton(btn_panel, 0, "Fitness"));
-    btns.push_back(new wxButton(btn_panel, 1, "Finance"));
-    btns.push_back(new wxButton(btn_panel, 2, "LeetCode"));
+    btns.push_back(new WGM_Button(btn_panel, 0, "Fitness"));
+    btns.push_back(new WGM_Button(btn_panel, 1, "Finance"));
+    btns.push_back(new WGM_Button(btn_panel, 2, "LeetCode"));
 
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
     for (size_t i = 0; i < btns.size(); i++) {
