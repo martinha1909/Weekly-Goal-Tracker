@@ -24,6 +24,7 @@
     <ClInclude Include="Driver/WGM_App/include/WGM_App.h" />
     <ClInclude Include="GUI/Components/WGM_Button/include/WGM_Button.h" />
     <ClInclude Include="GUI/Components/WGM_Goal_Button/include/WGM_Goal_Button.h" />
+    <ClInclude Include="GUI/Components/WGM_TextCtrl/include/WGM_TextCtrl.h" />
     <ClInclude Include="Driver/WGM_Driver/include/WGM_Driver.h" />
     <ClInclude Include="Driver/Goal/include/Goal.h" />
   </ItemGroup>
@@ -32,6 +33,7 @@
     <ClCompile Include="Driver/WGM_App/WGM_App.cpp" />
     <ClCompile Include="GUI/Components/WGM_Button/WGM_Button.cpp" />
     <ClCompile Include="GUI/Components/WGM_Goal_Button/WGM_Goal_Button.cpp" />
+    <ClCompile Include="GUI/Components/WGM_TextCtrl/WGM_TextCtrl.cpp" />
     <ClCompile Include="Driver/WGM_Driver/WGM_Driver.cpp" />
     <ClCompile Include="Driver/Goal/Goal.cpp" />
   </ItemGroup>

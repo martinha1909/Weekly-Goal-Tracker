@@ -1,5 +1,6 @@
 #include "include/AddGoal.h"
 #include "../Components/WGM_Button/include/WGM_Button.h"
+#include "../Components/WGM_TextCtrl/include/WGM_TextCtrl.h"
 #include "../../Driver/Goal/include/Goal.h"
 #include "../../Constants/include/Constants.h"
 
@@ -22,9 +23,7 @@ AddGoal::AddGoal(WGM_Driver* driver) : wxFrame(nullptr, wxID_ANY, "Add Goal", wx
     goal_category_title->SetFont(goal_category_title_font);
     panel_sizer->Add(goal_category_title, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
 
-    text_box = new wxTextCtrl(panel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(150, 20), wxBORDER_NONE | wxTE_PROCESS_ENTER);
-    text_box->SetBackgroundColour(wxColour(0, 0, 0));
-    text_box->SetForegroundColour(wxColour(255, 255, 255));
+    text_box = new WGM_TextCtrl(panel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(150, 20), wxBORDER_NONE | wxTE_PROCESS_ENTER);
     text_box->Bind(wxEVT_TEXT_ENTER, &AddGoal::addGoalClicked, this);
 
     panel_sizer->Add(text_box, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
