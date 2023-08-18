@@ -4,6 +4,7 @@
 #include <wx/log.h>
 #include <wx/wx.h>
 #include "../../../GUI/AddGoal/include/AddGoal.h"
+#include "../../Goal/include/Goal.h"
 
 class WGM_Driver : public wxFrame
 {
@@ -24,7 +25,7 @@ public:
 	~WGM_Driver();
 
 	void addGoalMenuSelected(wxCommandEvent& event);
-	void appendGoal(const wxString& new_goal);
+	void appendGoal(Goal* new_goal);
 
 	wxDECLARE_EVENT_TABLE();
 };

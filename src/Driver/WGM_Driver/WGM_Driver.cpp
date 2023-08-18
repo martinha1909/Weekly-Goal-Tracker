@@ -1,5 +1,5 @@
 #include "include/WGM_Driver.h"
-#include "../../GUI/Components/WGM_Button/include/WGM_Button.h"
+#include "../../GUI/Components/WGM_Goal_Button/include/WGM_Goal_Button.h"
 #include "../../Constants/include/Constants.h"
 
 wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
@@ -47,9 +47,9 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    btns.push_back(new WGM_Button(btn_panel, 0, "Fitness"));
-    btns.push_back(new WGM_Button(btn_panel, 1, "Finance"));
-    btns.push_back(new WGM_Button(btn_panel, 2, "LeetCode"));
+    btns.push_back(new WGM_Goal_Button(btn_panel, 0, "Fitness"));
+    btns.push_back(new WGM_Goal_Button(btn_panel, 1, "Finance"));
+    btns.push_back(new WGM_Goal_Button(btn_panel, 2, "LeetCode"));
 
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
     for (size_t i = 0; i < btns.size(); i++) {
@@ -65,10 +65,10 @@ void WGM_Driver::addGoalMenuSelected(wxCommandEvent& event)
     event.Skip();
 }
 
-void WGM_Driver::appendGoal(const wxString& new_goal)
+void WGM_Driver::appendGoal(Goal* new_goal)
 {
-    if (!new_goal.empty()) {
-        btns.push_back(new wxButton(btn_panel, (int)btns.size(), new_goal));
+    if (new_goal != NULL) {
+        btns.push_back(new WGM_Goal_Button(btn_panel, (int)btns.size(), new_goal));
         btn_sizer->Add(btns[(int)btns.size() - 1], 1, wxALL, 10);
 
         // Update the sizer's layout and the panel's layout

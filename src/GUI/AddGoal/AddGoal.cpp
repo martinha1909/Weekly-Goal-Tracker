@@ -1,5 +1,6 @@
 #include "include/AddGoal.h"
 #include "../Components/WGM_Button/include/WGM_Button.h"
+#include "../../Driver/Goal/include/Goal.h"
 #include "../../Constants/include/Constants.h"
 
 AddGoal::AddGoal(WGM_Driver* driver) : wxFrame(nullptr, wxID_ANY, "Add Goal", wxDefaultPosition, ADD_GOAL_FRAME_SIZE)
@@ -53,7 +54,8 @@ void AddGoal::addGoalClicked(wxCommandEvent& event)
 
     if (!goal_category.empty()) {
         if (driver) {
-            driver->appendGoal(goal_category);
+            Goal* goal = new Goal(goal_category.c_str());
+            driver->appendGoal(goal);
         }
         Close(); // Close the AddGoal frame
     }

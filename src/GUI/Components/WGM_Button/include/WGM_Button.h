@@ -4,7 +4,7 @@
 
 class WGM_Button : public wxButton
 {
-private:
+protected:
 	void setDefault();
 public:
 	WGM_Button(wxPanel* panel, const wxWindowID id, const wxString& name);
@@ -14,6 +14,6 @@ public:
 			   const wxPoint& loc, 
 			   const wxSize& size, 
 			   const wxBorder border);
-	~WGM_Button();
+	virtual ~WGM_Button();
 };
 
