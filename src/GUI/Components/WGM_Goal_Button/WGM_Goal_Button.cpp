@@ -52,6 +52,11 @@ WGM_Goal_Button::~WGM_Goal_Button()
 	}
 }
 
+Goal* WGM_Goal_Button::getGoal()
+{
+	return goal;
+}
+
 void WGM_Goal_Button::onRightClick(wxContextMenuEvent& event)
 {
 	// Create a context menu with menu items

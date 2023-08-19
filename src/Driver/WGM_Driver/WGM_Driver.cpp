@@ -87,9 +87,17 @@ void WGM_Driver::appendGoal(Goal* new_goal)
 void WGM_Driver::onRemoveGoal(wxCommandEvent& event)
 {
     int goal_id = event.GetInt(); // Get the goal ID from the event
-    btn_sizer->Detach(goals[goal_id]);
-    goals[goal_id]->Destroy();
-    goals.erase(goals.begin() + goal_id);
-    btn_sizer->Layout();
-    btn_panel->Layout();
+    int i = 0;
+
+    for (auto goal : goals) {
+        if (dynamic_cast<WGM_Goal_Button*>(goal)->getGoal()->getID() == goal_id) {
+            btn_sizer->Detach(goal);
+            goal->Destroy();
+            goals.erase(goals.begin() + i);
+            btn_sizer->Layout();
+            btn_panel->Layout();
+            break;
+        }
+        i++;
+    }
 }

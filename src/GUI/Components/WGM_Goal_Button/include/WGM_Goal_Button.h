@@ -32,5 +32,6 @@ public:
 	~WGM_Goal_Button();
 	void onRightClick(wxContextMenuEvent& event);
 	void onMenuItemChosen(wxCommandEvent& event);
+	Goal* getGoal();
 };
 
