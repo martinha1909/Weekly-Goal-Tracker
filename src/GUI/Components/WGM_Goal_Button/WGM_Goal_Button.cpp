@@ -57,7 +57,7 @@ void WGM_Goal_Button::onRightClick(wxContextMenuEvent& event)
 	// Create a context menu with menu items
 	wxMenu contextMenu;
 	contextMenu.Append(WGM_GOAL_BUTTON_REMOVE, "Remove");
-	Bind(wxEVT_MENU, &WGM_Goal_Button::onMenuItemChosen, this); // Bind to function for Menu Item 1
+	Bind(wxEVT_MENU, &WGM_Goal_Button::onMenuItemChosen, this);
 
 	// Show the context menu at the mouse position
 	PopupMenu(&contextMenu, this->ScreenToClient(event.GetPosition()));
@@ -69,9 +69,9 @@ void WGM_Goal_Button::onMenuItemChosen(wxCommandEvent& event)
 {
 	switch (event.GetId()) {
 		case WGM_GOAL_BUTTON_REMOVE:
-			dynamic_cast<WGM_Driver*>(frame)->removeGoal(this->goal);
-			break;
-		default:
+			wxCommandEvent removeEvent(wxEVT_COMMAND_BUTTON_CLICKED, WGM_GOAL_BUTTON_REMOVE);
+			removeEvent.SetInt(this->goal->getID()); // Pass the ID of the goal
+			wxPostEvent(frame, removeEvent); // Queue the event for the main thread
 			break;
 	}
 

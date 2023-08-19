@@ -15,33 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WGM_App.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WGM_Driver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GUI/AddGoal/include/AddGoal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI/Components/WGM_Button/include/WGM_Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constants/include/Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver/WGM_App/include/WGM_App.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI/Components/WGM_Goal_Button/include/WGM_Goal_Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI/Components/WGM_TextCtrl/include/WGM_TextCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI/Components/WGM_StaticText/include/WGM_StaticText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver/WGM_Driver/include/WGM_Driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Driver/Goal/include/Goal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WGM_App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WGM_Driver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GUI/AddGoal/AddGoal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI/Components/WGM_Button/WGM_Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver/WGM_App/WGM_App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI/Components/WGM_Goal_Button/WGM_Goal_Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI/Components/WGM_TextCtrl/WGM_TextCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI/Components/WGM_StaticText/WGM_StaticText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver/WGM_Driver/WGM_Driver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver/Goal/Goal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

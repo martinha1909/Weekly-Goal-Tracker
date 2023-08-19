@@ -15,5 +15,6 @@ public:
 	~Goal();
 	void setName(const std::string& name);
 	void setID(const int id);
+	int getID();
 	std::string getName();
 };

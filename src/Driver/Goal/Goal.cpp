@@ -35,3 +35,8 @@ std::string Goal::getName()
 {
 	return name;
 }
+
+int Goal::getID()
+{
+	return id;
+}

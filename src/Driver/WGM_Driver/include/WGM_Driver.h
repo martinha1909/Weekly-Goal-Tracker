@@ -26,7 +26,7 @@ public:
 
 	void addGoalMenuSelected(wxCommandEvent& event);
 	void appendGoal(Goal* new_goal);
-	void removeGoal(Goal* goal);
+	void onRemoveGoal(wxCommandEvent& event);
 
 	wxDECLARE_EVENT_TABLE();
 };

@@ -38,6 +38,10 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxD
     top_sizer->Add(center_sizer, 1, wxEXPAND);
 
     this->SetSizer(main_sizer);
+    
+    //Bind to event queue so that when a button is removed, wxWdiget will use its asynchronous event queue to remove a button,
+    //which will not cause unexpected behaviour with the GUI
+    this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &WGM_Driver::onRemoveGoal, this, WGM_GOAL_BUTTON_REMOVE);
 }
 
 WGM_Driver::~WGM_Driver()
@@ -80,7 +84,12 @@ void WGM_Driver::appendGoal(Goal* new_goal)
     }
 }
 
-void WGM_Driver::removeGoal(Goal* goal)
+void WGM_Driver::onRemoveGoal(wxCommandEvent& event)
 {
-    wxButton* newRandomButton = new wxButton(this, wxID_ANY, "Button" + goal->getName());
+    int goal_id = event.GetInt(); // Get the goal ID from the event
+    btn_sizer->Detach(goals[goal_id]);
+    goals[goal_id]->Destroy();
+    goals.erase(goals.begin() + goal_id);
+    btn_sizer->Layout();
+    btn_panel->Layout();
 }
