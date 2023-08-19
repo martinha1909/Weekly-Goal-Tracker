@@ -9,7 +9,7 @@
 class WGM_Driver : public wxFrame
 {
 private:
-	std::vector<wxButton*> btns;
+	std::vector<wxButton*> goals;
 	wxBoxSizer* main_sizer = nullptr;
 	wxBoxSizer* top_sizer = nullptr;
 	wxPanel* btn_panel = nullptr;
@@ -26,6 +26,7 @@ public:
 
 	void addGoalMenuSelected(wxCommandEvent& event);
 	void appendGoal(Goal* new_goal);
+	void removeGoal(Goal* goal);
 
 	wxDECLARE_EVENT_TABLE();
 };

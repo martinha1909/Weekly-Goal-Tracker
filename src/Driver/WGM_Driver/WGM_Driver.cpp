@@ -47,13 +47,13 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    btns.push_back(new WGM_Goal_Button(btn_panel, 0, new Goal("Fitness"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
-    btns.push_back(new WGM_Goal_Button(btn_panel, 1, new Goal("Finance"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
-    btns.push_back(new WGM_Goal_Button(btn_panel, 2, new Goal("LeetCode"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, 0, new Goal("Fitness"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, 1, new Goal("Finance"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, 2, new Goal("LeetCode"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
 
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
-    for (size_t i = 0; i < btns.size(); i++) {
-        btn_sizer->Add(btns[i], 1, wxALL, 10);
+    for (size_t i = 0; i < goals.size(); i++) {
+        btn_sizer->Add(goals[i], 1, wxALL, 10);
     }
 }
 
@@ -68,8 +68,8 @@ void WGM_Driver::addGoalMenuSelected(wxCommandEvent& event)
 void WGM_Driver::appendGoal(Goal* new_goal)
 {
     if (new_goal != NULL) {
-        btns.push_back(new WGM_Goal_Button(btn_panel, (int)btns.size(), new_goal));
-        btn_sizer->Add(btns[(int)btns.size() - 1], 1, wxALL, 10);
+        goals.push_back(new WGM_Goal_Button(this, btn_panel, (int)goals.size(), new_goal));
+        btn_sizer->Add(goals[(int)goals.size() - 1], 1, wxALL, 10);
 
         // Update the sizer's layout and the panel's layout
         btn_sizer->Layout();
@@ -78,4 +78,9 @@ void WGM_Driver::appendGoal(Goal* new_goal)
         // Refresh the frame's layout
         this->Layout();
     }
+}
+
+void WGM_Driver::removeGoal(Goal* goal)
+{
+    wxButton* newRandomButton = new wxButton(this, wxID_ANY, "Button" + goal->getName());
 }
