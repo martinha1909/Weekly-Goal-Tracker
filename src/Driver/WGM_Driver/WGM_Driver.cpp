@@ -6,7 +6,12 @@ wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
 EVT_MENU(ADD_GOAL_MENU_ID, WGM_Driver::addGoalMenuSelected)
 wxEND_EVENT_TABLE()
 
-WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxDefaultPosition, MAIN_APP_FRAME_SIZE, wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER)
+WGM_Driver::WGM_Driver() : wxFrame(nullptr, 
+                                   wxID_ANY, 
+                                   "Weekly Goal Manager", 
+                                   wxDefaultPosition, 
+                                   MAIN_APP_FRAME_SIZE, 
+                                   wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
     wxLog::EnableLogging(true);
 
@@ -48,9 +53,17 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    goals.push_back(new WGM_Goal_Button(this, btn_panel, 0, new Goal("Fitness"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
-    goals.push_back(new WGM_Goal_Button(this, btn_panel, 1, new Goal("Finance"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
-    goals.push_back(new WGM_Goal_Button(this, btn_panel, 2, new Goal("LeetCode"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    Goal* fitness = new Goal("Fitness");
+    Goal* lc = new Goal("LeetCode");
+
+    fitness->addSubGoal(new Goal("gym"));
+
+    lc->addSubGoal(new Goal("Easy"));
+    lc->addSubGoal(new Goal("Medium"));
+    lc->addSubGoal(new Goal("Hard"));
+
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, wxID_HIGHEST + 1, fitness, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, wxID_HIGHEST + 1, lc, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
 
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
     for (size_t i = 0; i < goals.size(); i++) {

@@ -40,7 +40,6 @@ public:
 	void onLeftClick(wxCommandEvent& event);
 	void onRightClick(wxContextMenuEvent& event);
 	void onMenuItemChosen(wxCommandEvent& event);
-	void onComboBoxSelected(wxCommandEvent& event);
 	Goal* getGoal();
 };
 

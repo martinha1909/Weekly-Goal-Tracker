@@ -12,12 +12,12 @@ class WGM_CheckBox;
 class WGM_Goal_Progress
 {
 private:
-	int num_sub_goals;
 	int num_sub_goals_done;
+	int y_coor;
 	Goal* goal = nullptr;
 	wxFrame* frame = nullptr;
 	wxGauge* progress = nullptr;
-	std::vector<WGM_CheckBox*> sub_goals;
+	std::vector<WGM_CheckBox*> sub_goal_checks;
 public:
 	WGM_Goal_Progress(Goal* goal, wxFrame* frame);
 	~WGM_Goal_Progress();

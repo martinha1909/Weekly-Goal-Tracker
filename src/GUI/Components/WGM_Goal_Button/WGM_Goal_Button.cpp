@@ -70,6 +70,12 @@ Goal* WGM_Goal_Button::getGoal()
 	return goal;
 }
 
+void WGM_Goal_Button::onLeftClick(wxCommandEvent& event)
+{
+	progress->show();
+	event.Skip();
+}
+
 void WGM_Goal_Button::onRightClick(wxContextMenuEvent& event)
 {
 	// Create a context menu with menu items
@@ -94,16 +100,4 @@ void WGM_Goal_Button::onMenuItemChosen(wxCommandEvent& event)
 	}
 
 	event.Skip();
-}
-
-void WGM_Goal_Button::onLeftClick(wxCommandEvent& event)
-{
-	progress->show();
-	event.Skip();
-}
-
-void WGM_Goal_Button::onComboBoxSelected(wxCommandEvent& event)
-{
-	//wxString selectedValue = combo_box->GetValue();
-	//wxMessageBox("Selected: " + selectedValue, "ComboBox Selection", wxOK | wxICON_INFORMATION);
 }

@@ -18,7 +18,17 @@ Goal::Goal(const char* name, const int id)
 
 Goal::~Goal()
 {
+	for (size_t i = 0; i < sub_goals.size(); i++) {
+		if (sub_goals[i] != nullptr) {
+			delete sub_goals[i];
+			sub_goals[i] = nullptr;
+		}
+	}
+}
 
+void Goal::addSubGoal(Goal* goal)
+{
+	sub_goals.push_back(goal);
 }
 
 void Goal::setName(const std::string& name)
@@ -39,4 +49,9 @@ std::string Goal::getName()
 int Goal::getID()
 {
 	return id;
+}
+
+std::vector<Goal*>* Goal::getSubGoals()
+{
+	return &sub_goals;
 }

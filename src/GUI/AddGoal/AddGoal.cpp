@@ -26,7 +26,7 @@ AddGoal::AddGoal(WGM_Driver* driver) : wxFrame(nullptr, wxID_ANY, "Add Goal", wx
     // Add another flexible space to center-align the text boxes vertically
     panel_sizer->AddStretchSpacer(1);
 
-    wxButton* add_button = new WGM_Button(this, panel, wxID_ANY, "Add", wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+    wxButton* add_button = new WGM_Button(this, panel, wxID_HIGHEST + 1, "Add", wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
     add_button->Bind(wxEVT_BUTTON, &AddGoal::addGoalClicked, this);
 
     panel_sizer->Add(add_button, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
