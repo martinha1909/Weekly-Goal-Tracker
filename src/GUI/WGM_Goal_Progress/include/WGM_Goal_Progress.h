@@ -17,11 +17,13 @@ private:
 	Goal* goal = nullptr;
 	wxFrame* frame = nullptr;
 	wxGauge* progress = nullptr;
+	wxStaticText* goal_title = nullptr;
 	std::vector<WGM_CheckBox*> sub_goal_checks;
 public:
 	WGM_Goal_Progress(Goal* goal, wxFrame* frame);
 	~WGM_Goal_Progress();
 	void show();
+	void resetUI();
 	void updateProgress(bool progress_made);
 };
 
