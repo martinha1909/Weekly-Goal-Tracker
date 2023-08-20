@@ -2,22 +2,26 @@
 
 #include <wx/wx.h>
 #include <wx/gauge.h>
+#include <wx/checkbox.h>
 #include "../../../Driver/Goal/include/Goal.h"
-#include "../../Components/WGM_CheckList/include/WGM_CheckList.h"
+#include "../../Components/WGM_CheckList/include/WGM_CheckBox.h"
 
 class Goal;
+class WGM_CheckBox;
 
 class WGM_Goal_Progress
 {
 private:
+	int num_sub_goals;
+	int num_sub_goals_done;
 	Goal* goal = nullptr;
 	wxFrame* frame = nullptr;
 	wxGauge* progress = nullptr;
-	std::vector<WGM_CheckList*> sub_goals;
+	std::vector<WGM_CheckBox*> sub_goals;
 public:
 	WGM_Goal_Progress(Goal* goal, wxFrame* frame);
 	~WGM_Goal_Progress();
 	void show();
-	void onSubGoalComplete(wxCommandEvent& event);
+	void updateProgress(bool progress_made);
 };
 
