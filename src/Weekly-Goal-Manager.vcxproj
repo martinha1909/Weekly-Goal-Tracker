@@ -28,6 +28,7 @@
     <ClInclude Include="GUI/Components/WGM_StaticText/include/WGM_StaticText.h" />
     <ClInclude Include="Driver/WGM_Driver/include/WGM_Driver.h" />
     <ClInclude Include="Driver/Goal/include/Goal.h" />
+    <ClInclude Include="GUI\Components\WGM_CheckList\include\WGM_CheckList.h" />
     <ClInclude Include="GUI\WGM_Goal_Progress\include\WGM_Goal_Progress.h" />
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +40,7 @@
     <ClCompile Include="GUI/Components/WGM_StaticText/WGM_StaticText.cpp" />
     <ClCompile Include="Driver/WGM_Driver/WGM_Driver.cpp" />
     <ClCompile Include="Driver/Goal/Goal.cpp" />
+    <ClCompile Include="GUI\Components\WGM_CheckList\WGM_CheckList.cpp" />
     <ClCompile Include="GUI\WGM_Goal_Progress\WGM_Goal_Progress.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
