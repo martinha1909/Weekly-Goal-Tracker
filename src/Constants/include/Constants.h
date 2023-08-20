@@ -11,7 +11,7 @@
 #define TEXT_BOX_FOREGROUND_COLOUR	   wxColour(252, 163, 17)
 
 /* Size */
-#define MAIN_APP_FRAME_SIZE			   wxSize(1000, 800)
+#define MAIN_APP_FRAME_SIZE			   wxSize(1200, 1000)
 #define ADD_GOAL_FRAME_SIZE			   wxSize(300, 300)
 
 /* IDs */

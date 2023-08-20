@@ -6,12 +6,9 @@ wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
 EVT_MENU(ADD_GOAL_MENU_ID, WGM_Driver::addGoalMenuSelected)
 wxEND_EVENT_TABLE()
 
-WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxDefaultPosition, MAIN_APP_FRAME_SIZE)
+WGM_Driver::WGM_Driver() : wxFrame(nullptr, wxID_ANY, "Weekly Goal Manager", wxDefaultPosition, MAIN_APP_FRAME_SIZE, wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER)
 {
     wxLog::EnableLogging(true);
-
-    // Calculate the height for the top section (20% of the frame height)
-    int topSectionHeight = GetSize().GetHeight() * 0.2;
 
     this->CenterOnScreen();
     this->SetBackgroundColour(APP_BACKGROUND_COLOUR);

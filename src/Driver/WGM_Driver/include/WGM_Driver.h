@@ -18,6 +18,7 @@ private:
 	wxBoxSizer* center_sizer = nullptr;
 	wxMenuBar* menu_bar = nullptr;
 	wxMenu* menu = nullptr;
+	wxComboBox* comboBox = nullptr;
 
 	void setUpDefaultButtons();
 public:

@@ -42,6 +42,7 @@ WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame,
 	this->goal = goal;
 	this->goal->setID(goal_id);
 	this->Bind(wxEVT_CONTEXT_MENU, &WGM_Goal_Button::onRightClick, this);
+	this->Bind(wxEVT_BUTTON, &WGM_Goal_Button::onLeftClick, this);
 }
 
 WGM_Goal_Button::~WGM_Goal_Button()
@@ -81,4 +82,26 @@ void WGM_Goal_Button::onMenuItemChosen(wxCommandEvent& event)
 	}
 
 	event.Skip();
+}
+
+void WGM_Goal_Button::onLeftClick(wxCommandEvent& event)
+{
+	if (combo_box != nullptr) {
+		combo_box->Destroy();
+	}
+	combo_box = new wxCheckListBox(frame, wxID_ANY, wxPoint(500, 80), wxSize(400, 100));
+
+	// Add items to the combo box
+	combo_box->Append("Option 1");
+	combo_box->Append("Option 2");
+	combo_box->Append("Option 3");
+
+	// Bind event handler
+	combo_box->Bind(wxEVT_COMBOBOX, &WGM_Goal_Button::onComboBoxSelected, this);
+}
+
+void WGM_Goal_Button::onComboBoxSelected(wxCommandEvent& event)
+{
+	//wxString selectedValue = combo_box->GetValue();
+	//wxMessageBox("Selected: " + selectedValue, "ComboBox Selection", wxOK | wxICON_INFORMATION);
 }

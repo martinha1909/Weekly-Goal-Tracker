@@ -12,6 +12,7 @@ class WGM_Goal_Button : public WGM_Button
 {
 private:
 	Goal* goal;
+	wxCheckListBox* combo_box = nullptr;
 public:
 	WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, const char* name);
 	WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, Goal* goal);
@@ -30,8 +31,10 @@ public:
 					const wxSize& size,
 					const wxBorder border);
 	~WGM_Goal_Button();
+	void onLeftClick(wxCommandEvent& event);
 	void onRightClick(wxContextMenuEvent& event);
 	void onMenuItemChosen(wxCommandEvent& event);
+	void onComboBoxSelected(wxCommandEvent& event);
 	Goal* getGoal();
 };
 
