@@ -1,18 +1,24 @@
 #pragma once
 
 #include "../../WGM_Button/include/WGM_Button.h"
+#include "../../../WGM_Goal_Progress/include/WGM_Goal_Progress.h"
 #include "../../../../Driver/Goal/include/Goal.h"
+
+class WGM_Goal_progress;
 
 typedef enum WGM_goal_button_option {
 	WGM_GOAL_BUTTON_REMOVE = wxID_HIGHEST + 1
 	//More options go here
 } WGM_goal_button_option_e;
 
+
 class WGM_Goal_Button : public WGM_Button
 {
 private:
 	Goal* goal;
-	wxCheckListBox* combo_box = nullptr;
+	WGM_Goal_Progress* progress;
+
+	void setDefault();
 public:
 	WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, const char* name);
 	WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, Goal* goal);

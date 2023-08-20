@@ -42,6 +42,12 @@
     <ClInclude Include="Driver/Goal/include/Goal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WGM_Goal_Progress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\WGM_Goal_Progress\include\WGM_Goal_Progress.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUI/AddGoal/AddGoal.cpp">
@@ -66,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Driver/Goal/Goal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\WGM_Goal_Progress\WGM_Goal_Progress.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

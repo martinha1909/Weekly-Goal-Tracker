@@ -7,6 +7,7 @@ WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowI
 {
 	int goal_id = wxWindowIDRef(id).GetValue();
 	goal = new Goal(name, goal_id);
+	setDefault();
 }
 
 WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, Goal* goal) : WGM_Button(frame, panel, id, wxString(goal->getName().c_str(), wxConvUTF8))
@@ -14,7 +15,7 @@ WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowI
 	int goal_id = wxWindowIDRef(id).GetValue();
 	this->goal = goal;
 	this->goal->setID(goal_id);
-	this->Bind(wxEVT_CONTEXT_MENU, &WGM_Goal_Button::onRightClick, this);
+	setDefault();
 }
 
 WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, 
@@ -27,7 +28,7 @@ WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame,
 {
 	int goal_id = wxWindowIDRef(id).GetValue();
 	goal = new Goal(name, goal_id);
-	this->Bind(wxEVT_CONTEXT_MENU, &WGM_Goal_Button::onRightClick, this);
+	setDefault();
 }
 
 WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, 
@@ -41,8 +42,7 @@ WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame,
 	int goal_id = wxWindowIDRef(id).GetValue();
 	this->goal = goal;
 	this->goal->setID(goal_id);
-	this->Bind(wxEVT_CONTEXT_MENU, &WGM_Goal_Button::onRightClick, this);
-	this->Bind(wxEVT_BUTTON, &WGM_Goal_Button::onLeftClick, this);
+	setDefault();
 }
 
 WGM_Goal_Button::~WGM_Goal_Button()
@@ -51,6 +51,18 @@ WGM_Goal_Button::~WGM_Goal_Button()
 		delete goal;
 		goal = nullptr;
 	}
+
+	if (progress != nullptr) {
+		delete progress;
+		progress = nullptr;
+	}
+}
+
+void WGM_Goal_Button::setDefault()
+{
+	progress = new WGM_Goal_Progress(this->goal, this->frame);
+	this->Bind(wxEVT_CONTEXT_MENU, &WGM_Goal_Button::onRightClick, this);
+	this->Bind(wxEVT_BUTTON, &WGM_Goal_Button::onLeftClick, this);
 }
 
 Goal* WGM_Goal_Button::getGoal()
@@ -86,18 +98,8 @@ void WGM_Goal_Button::onMenuItemChosen(wxCommandEvent& event)
 
 void WGM_Goal_Button::onLeftClick(wxCommandEvent& event)
 {
-	if (combo_box != nullptr) {
-		combo_box->Destroy();
-	}
-	combo_box = new wxCheckListBox(frame, wxID_ANY, wxPoint(500, 80), wxSize(400, 100));
-
-	// Add items to the combo box
-	combo_box->Append("Option 1");
-	combo_box->Append("Option 2");
-	combo_box->Append("Option 3");
-
-	// Bind event handler
-	combo_box->Bind(wxEVT_COMBOBOX, &WGM_Goal_Button::onComboBoxSelected, this);
+	progress->show();
+	event.Skip();
 }
 
 void WGM_Goal_Button::onComboBoxSelected(wxCommandEvent& event)

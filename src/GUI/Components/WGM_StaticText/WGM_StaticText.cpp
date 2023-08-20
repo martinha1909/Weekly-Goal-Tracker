@@ -6,6 +6,16 @@ WGM_StaticText::WGM_StaticText(wxPanel* panel, const wxWindowID id, const wxStri
 	setDefault();
 }
 
+WGM_StaticText::WGM_StaticText(wxFrame* frame, 
+							   const wxWindowID id, 
+							   const char* name, 
+							   const wxPoint& loc, 
+							   const wxSize& size, 
+							   const wxAlignment align) : wxStaticText(frame, id, name, loc, size, align)
+{
+	setDefault();
+}
+
 WGM_StaticText::~WGM_StaticText()
 {
 
