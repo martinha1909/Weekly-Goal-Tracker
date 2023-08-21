@@ -44,6 +44,7 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr,
     //Bind to event queue so that when a button is removed, wxWdiget will use its asynchronous event queue to remove a button,
     //which will not cause unexpected behaviour with the GUI
     this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &WGM_Driver::onRemoveGoal, this, WGM_GOAL_BUTTON_REMOVE);
+    title = new WGM_StaticText(this, wxID_ANY, "", wxPoint(380, 80), wxDefaultSize, wxALIGN_CENTER);
 }
 
 WGM_Driver::~WGM_Driver()
@@ -110,4 +111,36 @@ void WGM_Driver::onRemoveGoal(wxCommandEvent& event)
         }
         i++;
     }
+}
+
+void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
+{
+    int sub_goal_x_coor = 450;
+    std::vector<Goal*>* sub_goals = progress->getGoal()->getSubGoals();
+
+    if (goal_progress != nullptr) {
+        goal_progress->Destroy();
+    }
+
+    goal_progress = new wxGauge(this, wxID_ANY, 100, wxPoint(450, 80), wxSize(300, 20), wxGA_HORIZONTAL);
+    goal_progress->SetValue(progress->getCompletePercentage()); // Set progress to 20%
+
+    progress->setYCoor(GOAL_PROGRESS_TITLE_START_Y);
+    title->SetLabel(progress->getGoal()->getName().c_str());
+
+    progress->setYCoor(120);
+    while (!sub_goal_checks.empty()) {
+        sub_goal_checks.back()->Destroy();
+        sub_goal_checks.pop_back();
+    }
+    for (size_t i = 0; i < sub_goals->size(); i++) {
+        sub_goal_checks.push_back(new WGM_CheckBox(progress, this, wxID_ANY, sub_goals->at(i)->getName().c_str(), wxPoint(sub_goal_x_coor, progress->getYCoor()), wxSize(300, 25)));
+        progress->setYCoor(progress->getYCoor() + 35);
+    }
+}
+
+void WGM_Driver::updateProgressBarGUI(int percentage)
+{
+    goal_progress->SetValue(percentage);
+    goal_progress->Refresh();
 }

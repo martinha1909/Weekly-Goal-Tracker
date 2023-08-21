@@ -12,18 +12,18 @@ class WGM_CheckBox;
 class WGM_Goal_Progress
 {
 private:
-	int num_sub_goals_done;
-	int y_coor;
 	Goal* goal = nullptr;
 	wxFrame* frame = nullptr;
-	wxGauge* progress = nullptr;
-	wxStaticText* goal_title = nullptr;
-	std::vector<WGM_CheckBox*> sub_goal_checks;
+	int num_sub_goals_done;
+	float complete_percentage;
+	int y_coor;
 public:
 	WGM_Goal_Progress(Goal* goal, wxFrame* frame);
 	~WGM_Goal_Progress();
-	void show();
-	void resetUI();
 	void updateProgress(bool progress_made);
+	int getYCoor();
+	Goal* getGoal();
+	int getCompletePercentage();
+	void setYCoor(int coor);
 };
 

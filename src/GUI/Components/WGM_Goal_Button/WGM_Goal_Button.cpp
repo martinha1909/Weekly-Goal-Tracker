@@ -72,7 +72,8 @@ Goal* WGM_Goal_Button::getGoal()
 
 void WGM_Goal_Button::onLeftClick(wxCommandEvent& event)
 {
-	progress->show();
+	dynamic_cast<WGM_Driver*>(frame)->updateGoalGUI(progress);
+	//progress->show();
 	event.Skip();
 }
 
