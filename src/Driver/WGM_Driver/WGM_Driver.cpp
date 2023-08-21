@@ -3,6 +3,7 @@
 #include "../../GUI/Components/WGM_Goal_Button/include/WGM_Goal_Button.h"
 #include "../../GUI/Components/WGM_Separator/include/WGM_Separator.h"
 #include "../../Constants/include/Constants.h"
+#include "../Goal/include/DefaultGoal.h"
 
 wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
 EVT_MENU(ADD_GOAL_MENU_ID, WGM_Driver::addGoalMenuSelected)
@@ -65,16 +66,24 @@ WGM_Driver::~WGM_Driver()
     
 }
 
+WGM_Driver* WGM_Driver::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new WGM_Driver();
+    }
+    return instance;
+}
+
 void WGM_Driver::setUpDefaultButtons()
 {
-    Goal* fitness = new Goal("Fitness", WGM_NEXT_ID());
-    Goal* lc = new Goal("LeetCode", WGM_NEXT_ID());
+    Goal* fitness = new DefaultGoal("Fitness", WGM_NEXT_ID());
+    Goal* lc = new DefaultGoal("LeetCode", WGM_NEXT_ID());
 
-    fitness->addSubGoal(new Goal("gym", WGM_NEXT_ID()));
+    fitness->addSubGoal(new DefaultGoal("gym", WGM_NEXT_ID()));
 
-    lc->addSubGoal(new Goal("Easy", WGM_NEXT_ID()));
-    lc->addSubGoal(new Goal("Medium", WGM_NEXT_ID()));
-    lc->addSubGoal(new Goal("Hard", WGM_NEXT_ID()));
+    lc->addSubGoal(new DefaultGoal("Easy", WGM_NEXT_ID()));
+    lc->addSubGoal(new DefaultGoal("Medium", WGM_NEXT_ID()));
+    lc->addSubGoal(new DefaultGoal("Hard", WGM_NEXT_ID()));
 
     goals.push_back(new WGM_Goal_Button(this, btn_panel, WGM_NEXT_ID(), fitness, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
     goals.push_back(new WGM_Goal_Button(this, btn_panel, WGM_NEXT_ID(), lc, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
@@ -96,7 +105,7 @@ void WGM_Driver::addGoalMenuSelected(wxCommandEvent& event)
 void WGM_Driver::appendGoal(Goal* new_goal)
 {
     if (new_goal != NULL) {
-        goals.push_back(new WGM_Goal_Button(this, btn_panel, (int)goals.size(), new_goal));
+        goals.push_back(new WGM_Goal_Button(this, btn_panel, WGM_NEXT_ID(), new_goal, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
         btn_sizer->Add(goals[(int)goals.size() - 1], 1, wxALL, 10);
 
         // Update the sizer's layout and the panel's layout
@@ -128,55 +137,61 @@ void WGM_Driver::onRemoveGoal(wxCommandEvent& event)
 
 void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
 {
-    int sub_goal_x_coor = 450;
-    std::vector<Goal*>* sub_goals = progress->getGoal()->getSubGoals();
-    std::string progress_title = progress->getGoal()->getName() + 
-                                 " (" +
-                                 std::to_string(progress->getGoal()->getNumSubGoalsDone()) + 
-                                 " / " + 
-                                 std::to_string(progress->getGoal()->getSubGoals()->size()) +
-                                 ")";
+    if (dynamic_cast<DefaultGoal*>(progress->getGoal()) != nullptr) {
+        DefaultGoal* curr_goal = dynamic_cast<DefaultGoal*>(progress->getGoal());
+        int sub_goal_x_coor = 450;
+        std::vector<DefaultGoal*>* sub_goals = curr_goal->getSubGoals();
+        std::string progress_title = progress->getGoal()->getName() + 
+                                     " (" +
+                                     std::to_string(curr_goal->getNumSubGoalsDone()) +
+                                     " / " + 
+                                     std::to_string(sub_goals->size()) +
+                                     ")";
  
-    if (goal_progress != nullptr) {
-        goal_progress->Destroy();
-    }
+        if (goal_progress != nullptr) {
+            goal_progress->Destroy();
+        }
 
-    //WGM_Separator* separator = new WGM_Separator(this, WGM_NEXT_ID());
-    goal_progress = new wxGauge(this, wxID_ANY, 100, wxPoint(450, 80), wxSize(300, 20), wxGA_HORIZONTAL);
-    goal_progress->SetValue(progress->getCompletePercentage()); // Set progress to 20%
+        //WGM_Separator* separator = new WGM_Separator(this, WGM_NEXT_ID());
+        goal_progress = new wxGauge(this, wxID_ANY, 100, wxPoint(450, 80), wxSize(300, 20), wxGA_HORIZONTAL);
+        goal_progress->SetValue(progress->getCompletePercentage()); // Set progress to 20%
 
-    progress->setYCoor(GOAL_PROGRESS_TITLE_START_Y);
-    title->SetLabel(progress_title);
+        progress->setYCoor(GOAL_PROGRESS_TITLE_START_Y);
+        title->SetLabel(progress_title);
 
-    progress->setYCoor(120);
-    while (!sub_goal_checks.empty()) {
-        sub_goal_checks.back()->Destroy();
-        sub_goal_checks.pop_back();
-    }
-    for (size_t i = 0; i < sub_goals->size(); i++) {
-        sub_goal_checks.push_back(new WGM_CheckBox(progress, 
-                                                   this, 
-                                                   sub_goals->at(i)->getID(), 
-                                                   sub_goals->at(i)->getName().c_str(),
-                                                   wxPoint(sub_goal_x_coor, 
-                                                   progress->getYCoor()), 
-                                                   wxSize(300, 25),
-                                                   sub_goals->at(i)->isCompleted()));
-        progress->setYCoor(progress->getYCoor() + 35);
+        progress->setYCoor(120);
+        while (!sub_goal_checks.empty()) {
+            sub_goal_checks.back()->Destroy();
+            sub_goal_checks.pop_back();
+        }
+        for (size_t i = 0; i < sub_goals->size(); i++) {
+            sub_goal_checks.push_back(new WGM_CheckBox(progress, 
+                                                       this, 
+                                                       sub_goals->at(i)->getID(), 
+                                                       sub_goals->at(i)->getName().c_str(),
+                                                       wxPoint(sub_goal_x_coor, 
+                                                       progress->getYCoor()), 
+                                                       wxSize(300, 25),
+                                                       sub_goals->at(i)->isCompleted()));
+            progress->setYCoor(progress->getYCoor() + 35);
+        }
     }
 }
 
 void WGM_Driver::updateProgressBarGUI(WGM_Goal_Progress* updated_progress)
 {
-    std::string progress_title = updated_progress->getGoal()->getName() +
-                                 " (" +
-                                 std::to_string(updated_progress->getGoal()->getNumSubGoalsDone()) +
-                                 " / " +
-                                 std::to_string(updated_progress->getGoal()->getSubGoals()->size()) +
-                                 ")";
-    title->SetLabel(progress_title);
-    title->Refresh();
+    if (dynamic_cast<DefaultGoal*>(updated_progress->getGoal()) != nullptr) {
+        DefaultGoal* curr_goal = dynamic_cast<DefaultGoal*>(updated_progress->getGoal());
+        std::string progress_title = curr_goal->getName() +
+                                     " (" +
+                                     std::to_string(curr_goal->getNumSubGoalsDone()) +
+                                     " / " +
+                                     std::to_string(curr_goal->getSubGoals()->size()) +
+                                     ")";
+        title->SetLabel(progress_title);
+        title->Refresh();
 
-    goal_progress->SetValue(updated_progress->getCompletePercentage());
-    goal_progress->Refresh();
+        goal_progress->SetValue(updated_progress->getCompletePercentage());
+        goal_progress->Refresh();
+    }
 }

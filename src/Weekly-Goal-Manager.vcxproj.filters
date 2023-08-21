@@ -51,6 +51,9 @@
     <ClInclude Include="GUI\Components\WGM_Separator\include\WGM_Separator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Driver\Goal\include\DefaultGoal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUI/AddGoal/AddGoal.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Components\WGM_Separator\WGM_Separator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Driver\Goal\DefaultGoal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

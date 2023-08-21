@@ -20,15 +20,6 @@ private:
 
 	void setDefault();
 public:
-	WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, const char* name);
-	WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, Goal* goal);
-	WGM_Goal_Button(wxFrame* frame, 
-				    wxPanel* panel,
-					const wxWindowID id,
-					const char* name,
-					const wxPoint& loc,
-					const wxSize& size,
-					const wxBorder border);
 	WGM_Goal_Button(wxFrame* frame, 
 					wxPanel* panel,
 					const wxWindowID id,

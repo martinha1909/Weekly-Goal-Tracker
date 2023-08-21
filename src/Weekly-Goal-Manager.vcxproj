@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants/include/Constants.h" />
+    <ClInclude Include="Driver\Goal\include\DefaultGoal.h" />
     <ClInclude Include="GUI/AddGoal/include/AddGoal.h" />
     <ClInclude Include="Driver/WGM_App/include/WGM_App.h" />
     <ClInclude Include="GUI/Components/WGM_Button/include/WGM_Button.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="GUI\WGM_Goal_Progress\include\WGM_Goal_Progress.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Driver\Goal\DefaultGoal.cpp" />
     <ClCompile Include="GUI/Components/WGM_Button/WGM_Button.cpp" />
     <ClCompile Include="GUI/AddGoal/AddGoal.cpp" />
     <ClCompile Include="Driver/WGM_App/WGM_App.cpp" />

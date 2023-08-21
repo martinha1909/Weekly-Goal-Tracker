@@ -16,6 +16,7 @@ class WGM_Button;
 class WGM_Driver : public wxFrame
 {
 private:
+	static WGM_Driver* instance;
 	std::vector<WGM_CheckBox*> sub_goal_checks;
 	std::vector<wxButton*> goals;
 	wxBoxSizer* main_sizer = nullptr;
@@ -31,10 +32,12 @@ private:
 	wxGauge* goal_progress = nullptr;
 
 	void setUpDefaultButtons();
-public:
 	WGM_Driver();
+public:
+	WGM_Driver(const WGM_Driver& other) = delete;
 	~WGM_Driver();
 
+	static WGM_Driver* getInstance();
 	void addGoalMenuSelected(wxCommandEvent& event);
 	void appendGoal(Goal* new_goal);
 	void onRemoveGoal(wxCommandEvent& event);

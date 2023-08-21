@@ -4,34 +4,6 @@
 #include <wx/dcclient.h>
 #include "../../../Constants/include/Constants.h"
 
-WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, const char* name) : WGM_Button(frame, panel, id, wxString(name, wxConvUTF8))
-{
-	int goal_id = wxWindowIDRef(id).GetValue();
-	goal = new Goal(name, goal_id);
-	setDefault();
-}
-
-WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, Goal* goal) : WGM_Button(frame, panel, id, wxString(goal->getName().c_str(), wxConvUTF8))
-{
-	int goal_id = wxWindowIDRef(id).GetValue();
-	this->goal = goal;
-	this->goal->setID(goal_id);
-	setDefault();
-}
-
-WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, 
-								 wxPanel* panel,
-								 const wxWindowID id,
-								 const char* name,
-								 const wxPoint& loc,
-								 const wxSize& size,
-								 const wxBorder border) : WGM_Button(frame, panel, id, wxString(name, wxConvUTF8), loc, size, border)
-{
-	int goal_id = wxWindowIDRef(id).GetValue();
-	goal = new Goal(name, goal_id);
-	setDefault();
-}
-
 WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, 
 								 wxPanel* panel,
 								 const wxWindowID id,
