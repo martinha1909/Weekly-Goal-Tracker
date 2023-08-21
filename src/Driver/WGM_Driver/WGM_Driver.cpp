@@ -54,14 +54,14 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    Goal* fitness = new Goal("Fitness");
-    Goal* lc = new Goal("LeetCode");
+    Goal* fitness = new Goal("Fitness", wxID_HIGHEST + 1);
+    Goal* lc = new Goal("LeetCode", wxID_HIGHEST + 1);
 
-    fitness->addSubGoal(new Goal("gym"));
+    fitness->addSubGoal(new Goal("gym", wxID_HIGHEST + 1));
 
-    lc->addSubGoal(new Goal("Easy"));
-    lc->addSubGoal(new Goal("Medium"));
-    lc->addSubGoal(new Goal("Hard"));
+    lc->addSubGoal(new Goal("Easy", wxID_HIGHEST + 1));
+    lc->addSubGoal(new Goal("Medium", wxID_HIGHEST + 1));
+    lc->addSubGoal(new Goal("Hard", wxID_HIGHEST + 1));
 
     goals.push_back(new WGM_Goal_Button(this, btn_panel, wxID_HIGHEST + 1, fitness, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
     goals.push_back(new WGM_Goal_Button(this, btn_panel, wxID_HIGHEST + 1, lc, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
@@ -134,7 +134,14 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
         sub_goal_checks.pop_back();
     }
     for (size_t i = 0; i < sub_goals->size(); i++) {
-        sub_goal_checks.push_back(new WGM_CheckBox(progress, this, wxID_ANY, sub_goals->at(i)->getName().c_str(), wxPoint(sub_goal_x_coor, progress->getYCoor()), wxSize(300, 25)));
+        sub_goal_checks.push_back(new WGM_CheckBox(progress, 
+                                                   this, 
+                                                   sub_goals->at(i)->getID(), 
+                                                   sub_goals->at(i)->getName().c_str(),
+                                                   wxPoint(sub_goal_x_coor, 
+                                                   progress->getYCoor()), 
+                                                   wxSize(300, 25),
+                                                   sub_goals->at(i)->isCompleted()));
         progress->setYCoor(progress->getYCoor() + 35);
     }
 }

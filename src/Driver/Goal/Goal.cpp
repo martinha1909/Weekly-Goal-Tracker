@@ -8,12 +8,14 @@ Goal::Goal()
 Goal::Goal(const char* name)
 {
 	this->name = name;
+	completed = false;
 }
 
 Goal::Goal(const char* name, const int id)
 {
 	this->name = name;
 	this->id = id;
+	completed = false;
 }
 
 Goal::~Goal()
@@ -54,4 +56,14 @@ int Goal::getID()
 std::vector<Goal*>* Goal::getSubGoals()
 {
 	return &sub_goals;
+}
+
+void Goal::setComplete(bool is_completed)
+{
+	completed = is_completed;
+}
+
+bool Goal::isCompleted()
+{
+	return completed;
 }

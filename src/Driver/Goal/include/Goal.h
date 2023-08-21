@@ -8,6 +8,7 @@ class Goal
 private:
 	std::string name;
 	int id;
+	bool completed;
 	std::vector<Goal*> sub_goals;
 
 public:
@@ -19,6 +20,8 @@ public:
 	void setID(const int id);
 	int getID();
 	void addSubGoal(Goal* goal);
+	void setComplete(bool is_completed);
 	std::string getName();
 	std::vector<Goal*>* getSubGoals();
+	bool isCompleted();
 };

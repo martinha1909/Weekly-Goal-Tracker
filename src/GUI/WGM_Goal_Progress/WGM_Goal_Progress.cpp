@@ -18,10 +18,17 @@ WGM_Goal_Progress::~WGM_Goal_Progress()
 
 }
 
-void WGM_Goal_Progress::updateProgress(bool progress_made)
+void WGM_Goal_Progress::updateProgress(bool progress_made, int goal_id)
 {
 	float ratio = (float)1 / (float)goal->getSubGoals()->size();
 	int new_progress = static_cast<int>(ratio * 100);
+
+	for (size_t i = 0; i < goal->getSubGoals()->size(); i++) {
+		if (goal->getSubGoals()->at(i)->getID() == goal_id) {
+			goal->getSubGoals()->at(i)->setComplete(progress_made);
+			break;
+		}
+	}
 
 	if (progress_made) {
 		complete_percentage += new_progress;

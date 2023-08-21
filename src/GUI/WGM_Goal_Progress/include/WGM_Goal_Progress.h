@@ -20,7 +20,7 @@ private:
 public:
 	WGM_Goal_Progress(Goal* goal, wxFrame* frame);
 	~WGM_Goal_Progress();
-	void updateProgress(bool progress_made);
+	void updateProgress(bool progress_made, int goal_id);
 	int getYCoor();
 	Goal* getGoal();
 	int getCompletePercentage();
