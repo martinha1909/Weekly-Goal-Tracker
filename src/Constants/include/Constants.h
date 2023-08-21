@@ -2,6 +2,7 @@
 
 #include <wx/wx.h>
 
+
 #define APP_BACKGROUND_COLOUR				wxColour(20, 33, 61)
 #define APP_TEXT_BOX_FONT					wxFontInfo(10).Family(wxFONTFAMILY_DEFAULT).FaceName("Roboto").Bold()
 #define APP_BUTTON_FONT						wxFontInfo(10).Family(wxFONTFAMILY_DEFAULT).FaceName("Raleway").Bold()
@@ -20,3 +21,12 @@
 
 /* IDs */
 #define ADD_GOAL_MENU_ID					10001
+#define WGM_UNIQUE_ID_START                 10002
+
+static int __cur_id = WGM_UNIQUE_ID_START;
+
+constexpr int WGM_NEXT_ID() {
+    int ret = __cur_id;
+    __cur_id++;
+    return ret;
+}

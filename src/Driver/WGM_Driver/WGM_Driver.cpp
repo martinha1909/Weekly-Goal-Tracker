@@ -54,17 +54,17 @@ WGM_Driver::~WGM_Driver()
 
 void WGM_Driver::setUpDefaultButtons()
 {
-    Goal* fitness = new Goal("Fitness", wxID_HIGHEST + 1);
-    Goal* lc = new Goal("LeetCode", wxID_HIGHEST + 1);
+    Goal* fitness = new Goal("Fitness", WGM_NEXT_ID());
+    Goal* lc = new Goal("LeetCode", WGM_NEXT_ID());
 
-    fitness->addSubGoal(new Goal("gym", wxID_HIGHEST + 1));
+    fitness->addSubGoal(new Goal("gym", WGM_NEXT_ID()));
 
-    lc->addSubGoal(new Goal("Easy", wxID_HIGHEST + 1));
-    lc->addSubGoal(new Goal("Medium", wxID_HIGHEST + 1));
-    lc->addSubGoal(new Goal("Hard", wxID_HIGHEST + 1));
+    lc->addSubGoal(new Goal("Easy", WGM_NEXT_ID()));
+    lc->addSubGoal(new Goal("Medium", WGM_NEXT_ID()));
+    lc->addSubGoal(new Goal("Hard", WGM_NEXT_ID()));
 
-    goals.push_back(new WGM_Goal_Button(this, btn_panel, wxID_HIGHEST + 1, fitness, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
-    goals.push_back(new WGM_Goal_Button(this, btn_panel, wxID_HIGHEST + 1, lc, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, WGM_NEXT_ID(), fitness, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
+    goals.push_back(new WGM_Goal_Button(this, btn_panel, WGM_NEXT_ID(), lc, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE));
 
     btn_sizer = new wxBoxSizer(wxHORIZONTAL);
     for (size_t i = 0; i < goals.size(); i++) {
