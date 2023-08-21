@@ -1,7 +1,8 @@
-#include "include/WGM_Goal_Button.h"
 #include <wx/wx.h>
 #include <wx/button.h>
+#include "include/WGM_Goal_Button.h"
 #include <wx/dcclient.h>
+#include "../../../Constants/include/Constants.h"
 
 WGM_Goal_Button::WGM_Goal_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, const char* name) : WGM_Button(frame, panel, id, wxString(name, wxConvUTF8))
 {
@@ -73,7 +74,6 @@ Goal* WGM_Goal_Button::getGoal()
 void WGM_Goal_Button::onLeftClick(wxCommandEvent& event)
 {
 	dynamic_cast<WGM_Driver*>(frame)->updateGoalGUI(progress);
-	//progress->show();
 	event.Skip();
 }
 

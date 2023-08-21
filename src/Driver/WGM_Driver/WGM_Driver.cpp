@@ -1,5 +1,7 @@
 #include "include/WGM_Driver.h"
+#include <wx/statline.h>
 #include "../../GUI/Components/WGM_Goal_Button/include/WGM_Goal_Button.h"
+#include "../../GUI/Components/WGM_Separator/include/WGM_Separator.h"
 #include "../../Constants/include/Constants.h"
 
 wxBEGIN_EVENT_TABLE(WGM_Driver, wxFrame)
@@ -29,6 +31,14 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr,
     setUpDefaultButtons();
     btn_panel->SetSizer(btn_sizer);
 
+    wxPanel* line_panel = new wxPanel(this);
+    wxStaticLine* separatorLine = new wxStaticLine(line_panel, wxID_ANY, wxDefaultPosition, wxSize(1200, 1), wxLI_HORIZONTAL);
+
+    wxBoxSizer* line_sizer = new wxBoxSizer(wxVERTICAL);
+    line_sizer->AddStretchSpacer(); // Stretch spacer to push the line to the bottom
+    line_sizer->Add(separatorLine, 0, wxEXPAND); // Add the static line
+    line_panel->SetSizer(line_sizer);
+
     main_sizer = new wxBoxSizer(wxVERTICAL);
     top_sizer = new wxBoxSizer(wxHORIZONTAL);
     main_sizer->Add(top_sizer, 0, wxEXPAND);
@@ -38,6 +48,9 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr,
     center_sizer->AddStretchSpacer();
 
     top_sizer->Add(center_sizer, 1, wxEXPAND);
+
+    // Add the line_panel to the main_sizer
+    main_sizer->Add(line_panel, 0, wxEXPAND);
 
     this->SetSizer(main_sizer);
     
@@ -117,16 +130,18 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
 {
     int sub_goal_x_coor = 450;
     std::vector<Goal*>* sub_goals = progress->getGoal()->getSubGoals();
-    std::string progress_title = "Progress (" + 
+    std::string progress_title = progress->getGoal()->getName() + 
+                                 " (" +
                                  std::to_string(progress->getGoal()->getNumSubGoalsDone()) + 
                                  " / " + 
                                  std::to_string(progress->getGoal()->getSubGoals()->size()) +
                                  ")";
-
+ 
     if (goal_progress != nullptr) {
         goal_progress->Destroy();
     }
 
+    //WGM_Separator* separator = new WGM_Separator(this, WGM_NEXT_ID());
     goal_progress = new wxGauge(this, wxID_ANY, 100, wxPoint(450, 80), wxSize(300, 20), wxGA_HORIZONTAL);
     goal_progress->SetValue(progress->getCompletePercentage()); // Set progress to 20%
 
@@ -153,7 +168,8 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
 
 void WGM_Driver::updateProgressBarGUI(WGM_Goal_Progress* updated_progress)
 {
-    std::string progress_title = "Progress (" +
+    std::string progress_title = updated_progress->getGoal()->getName() +
+                                 " (" +
                                  std::to_string(updated_progress->getGoal()->getNumSubGoalsDone()) +
                                  " / " +
                                  std::to_string(updated_progress->getGoal()->getSubGoals()->size()) +

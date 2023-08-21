@@ -18,6 +18,10 @@ public:
 			   const wxPoint& loc, 
 			   const wxSize& size, 
 			   const wxBorder border);
+	void onMouseEnter(wxMouseEvent& event);
+	void onMouseLeave(wxMouseEvent& event);
+	void onButtonSelected(wxFocusEvent& event);
+	void onButtonDeSelected(wxFocusEvent& event);
 	virtual ~WGM_Button();
 };
 

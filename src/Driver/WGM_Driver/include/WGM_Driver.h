@@ -7,9 +7,11 @@
 #include "../../../GUI/AddGoal/include/AddGoal.h"
 #include "../../Goal/include/Goal.h"
 #include "../../../GUI/Components/WGM_StaticText/include/WGM_StaticText.h"
+#include "../../../GUI/Components/WGM_Button/include/WGM_Button.h"
 #include "../../../GUI/WGM_Goal_Progress/include/WGM_Goal_Progress.h"
 
 class WGM_Goal_Progress;
+class WGM_Button;
 
 class WGM_Driver : public wxFrame
 {
