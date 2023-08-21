@@ -44,7 +44,7 @@ WGM_Driver::WGM_Driver() : wxFrame(nullptr,
     //Bind to event queue so that when a button is removed, wxWdiget will use its asynchronous event queue to remove a button,
     //which will not cause unexpected behaviour with the GUI
     this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &WGM_Driver::onRemoveGoal, this, WGM_GOAL_BUTTON_REMOVE);
-    title = new WGM_StaticText(this, wxID_ANY, "", wxPoint(380, 80), wxDefaultSize, wxALIGN_CENTER);
+    title = new WGM_StaticText(this, wxID_ANY, "", wxPoint(350, 80), wxDefaultSize, wxALIGN_CENTER);
 }
 
 WGM_Driver::~WGM_Driver()
@@ -117,6 +117,11 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
 {
     int sub_goal_x_coor = 450;
     std::vector<Goal*>* sub_goals = progress->getGoal()->getSubGoals();
+    std::string progress_title = "Progress (" + 
+                                 std::to_string(progress->getGoal()->getNumSubGoalsDone()) + 
+                                 " / " + 
+                                 std::to_string(progress->getGoal()->getSubGoals()->size()) +
+                                 ")";
 
     if (goal_progress != nullptr) {
         goal_progress->Destroy();
@@ -126,7 +131,7 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
     goal_progress->SetValue(progress->getCompletePercentage()); // Set progress to 20%
 
     progress->setYCoor(GOAL_PROGRESS_TITLE_START_Y);
-    title->SetLabel(progress->getGoal()->getName().c_str());
+    title->SetLabel(progress_title);
 
     progress->setYCoor(120);
     while (!sub_goal_checks.empty()) {
@@ -146,8 +151,16 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
     }
 }
 
-void WGM_Driver::updateProgressBarGUI(int percentage)
+void WGM_Driver::updateProgressBarGUI(WGM_Goal_Progress* updated_progress)
 {
-    goal_progress->SetValue(percentage);
+    std::string progress_title = "Progress (" +
+                                 std::to_string(updated_progress->getGoal()->getNumSubGoalsDone()) +
+                                 " / " +
+                                 std::to_string(updated_progress->getGoal()->getSubGoals()->size()) +
+                                 ")";
+    title->SetLabel(progress_title);
+    title->Refresh();
+
+    goal_progress->SetValue(updated_progress->getCompletePercentage());
     goal_progress->Refresh();
 }

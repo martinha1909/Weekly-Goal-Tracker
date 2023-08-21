@@ -14,7 +14,6 @@ class WGM_Goal_Progress
 private:
 	Goal* goal = nullptr;
 	wxFrame* frame = nullptr;
-	int num_sub_goals_done;
 	float complete_percentage;
 	int y_coor;
 public:

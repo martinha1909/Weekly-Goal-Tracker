@@ -8,7 +8,6 @@ WGM_Goal_Progress::WGM_Goal_Progress(Goal* goal, wxFrame* frame)
 {
 	this->goal = goal;
 	this->frame = frame;
-	num_sub_goals_done = 0;
 	complete_percentage = 0;
 	y_coor = GOAL_PROGRESS_TITLE_START_Y;
 }
@@ -32,21 +31,21 @@ void WGM_Goal_Progress::updateProgress(bool progress_made, int goal_id)
 
 	if (progress_made) {
 		complete_percentage += new_progress;
-		num_sub_goals_done++;
+		goal->setNumSubGoalsDone(goal->getNumSubGoalsDone() + 1);
 	} else {
 		complete_percentage -= new_progress;
-		num_sub_goals_done--;
+		goal->setNumSubGoalsDone(goal->getNumSubGoalsDone() - 1);
 	}
 
 	if (goal->getSubGoals()->size() <= 0) {
 		complete_percentage = 0;
 	} else {
-		if (num_sub_goals_done == goal->getSubGoals()->size()) {
+		if (goal->getNumSubGoalsDone() == (int)goal->getSubGoals()->size()) {
 			complete_percentage = 100;
 		}
 	}
 
-	dynamic_cast<WGM_Driver*>(frame)->updateProgressBarGUI(complete_percentage);
+	dynamic_cast<WGM_Driver*>(frame)->updateProgressBarGUI(this);
 }
 
 int WGM_Goal_Progress::getYCoor()

@@ -37,7 +37,7 @@ public:
 	void appendGoal(Goal* new_goal);
 	void onRemoveGoal(wxCommandEvent& event);
 	void updateGoalGUI(WGM_Goal_Progress* progress);
-	void updateProgressBarGUI(int percentage);
+	void updateProgressBarGUI(WGM_Goal_Progress* updated_progress);
 
 	wxDECLARE_EVENT_TABLE();
 };
