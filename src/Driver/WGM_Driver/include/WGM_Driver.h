@@ -31,6 +31,7 @@ private:
 	wxComboBox* comboBox = nullptr;
 	WGM_StaticText* title = nullptr;
 	wxGauge* goal_progress = nullptr;
+	wxSlider* slider = nullptr;
 
 	void setUpDefaultButtons();
 	WGM_Driver();
@@ -44,6 +45,7 @@ public:
 	void onRemoveGoal(wxCommandEvent& event);
 	void updateGoalGUI(WGM_Goal_Progress* progress);
 	void updateProgressBarGUI(WGM_Goal_Progress* updated_progress);
+	void onSliderUpdate(wxCommandEvent& event);
 
 	wxDECLARE_EVENT_TABLE();
 };
