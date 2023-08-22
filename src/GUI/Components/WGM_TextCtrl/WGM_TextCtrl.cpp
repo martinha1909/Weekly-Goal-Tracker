@@ -1,7 +1,7 @@
 #include "include/WGM_TextCtrl.h"
 #include "../../../Constants/include/Constants.h"
 
-WGM_TextCtrl::WGM_TextCtrl(wxPanel* panel,
+WGM_TextCtrl::WGM_TextCtrl(wxWindow* panel,
 						   const wxWindowID id,
 						   const wxChar* name,
 						   const wxPoint loc,

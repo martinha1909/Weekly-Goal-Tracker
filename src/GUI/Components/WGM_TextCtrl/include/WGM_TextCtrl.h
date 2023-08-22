@@ -7,7 +7,7 @@ class WGM_TextCtrl : public wxTextCtrl
 private:
 	void setDefault();
 public:
-	WGM_TextCtrl(wxPanel* panel, 
+	WGM_TextCtrl(wxWindow* panel, 
 				 const wxWindowID id, 
 				 const wxChar* name, 
 				 const wxPoint loc, 

@@ -15,7 +15,9 @@ DefaultGoal::~DefaultGoal()
 }
 void DefaultGoal::addSubGoal(Goal* goal)
 {
-	sub_goals.push_back(dynamic_cast<DefaultGoal*>(goal));
+	if (dynamic_cast<DefaultGoal*>(goal) != nullptr) {
+		sub_goals.push_back(dynamic_cast<DefaultGoal*>(goal));
+	}
 }
 void DefaultGoal::setNumSubGoalsDone(int num_done)
 {
@@ -26,7 +28,7 @@ int DefaultGoal::getNumSubGoalsDone()
 	return num_sub_goals_done;
 }
 
-std::vector<DefaultGoal*>* DefaultGoal::getSubGoals()
+std::vector<Goal*>* DefaultGoal::getSubGoals()
 {
 	return &sub_goals;
 }
