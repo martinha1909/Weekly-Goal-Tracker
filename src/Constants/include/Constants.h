@@ -25,6 +25,9 @@
 #define ADD_GOAL_MENU_ID					10001
 #define WGM_UNIQUE_ID_START                 10002
 
+/* miscellaneous */
+#define SLIDER_VALUE_MULTIPLIER_CAP         5 //Cap for max value of a slider
+
 static int __cur_id = WGM_UNIQUE_ID_START;
 
 constexpr int WGM_NEXT_ID() {

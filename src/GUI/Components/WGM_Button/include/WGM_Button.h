@@ -10,9 +10,9 @@ protected:
 
 	void setDefault();
 public:
-	WGM_Button(wxFrame* frame, wxPanel* panel, const wxWindowID id, const wxString& name);
+	WGM_Button(wxFrame* frame, wxWindow* panel, const wxWindowID id, const wxString& name);
 	WGM_Button(wxFrame* frame,
-			   wxPanel* panel, 
+			   wxWindow* panel,
 			   const wxWindowID id, 
 			   const wxString& name, 
 			   const wxPoint& loc, 

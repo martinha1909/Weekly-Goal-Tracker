@@ -36,6 +36,7 @@ private:
 	std::vector<WGM_TextCtrl*> custom_goal_slider_values;
 	std::vector< WGM_StaticText*> custom_sub_goal_titles;
 	std::vector<wxGauge*> custom_sub_goal_progress;
+	//std::vector<WGM_Button*> sub_goal_update_progress_btns;
 
 	void setUpDefaultButtons();
 	void resetUI();
@@ -51,6 +52,7 @@ public:
 	void updateGoalGUI(WGM_Goal_Progress* progress);
 	void updateProgressBarGUI(WGM_Goal_Progress* updated_progress);
 	void onSliderUpdate(wxScrollEvent& event);
+	void onSliderTextBoxEnter(wxCommandEvent& event);
 
 	wxDECLARE_EVENT_TABLE();
 };
