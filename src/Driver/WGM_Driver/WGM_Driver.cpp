@@ -149,9 +149,39 @@ void WGM_Driver::onRemoveGoal(wxCommandEvent& event)
     }
 }
 
+void WGM_Driver::resetUI()
+{
+    while (!sub_goal_checks.empty()) {
+        sub_goal_checks.back()->Destroy();
+        sub_goal_checks.pop_back();
+    }
+
+    while (!custom_goal_sliders.empty()) {
+        custom_goal_sliders.back()->Destroy();
+        custom_goal_sliders.pop_back();
+    }
+
+    while (!custom_goal_slider_values.empty()) {
+        custom_goal_slider_values.back()->Destroy();
+        custom_goal_slider_values.pop_back();
+    }
+
+    while (!custom_sub_goal_titles.empty()) {
+        custom_sub_goal_titles.back()->Destroy();
+        custom_sub_goal_titles.pop_back();
+    }
+
+    while (!custom_sub_goal_progress.empty()) {
+        custom_sub_goal_progress.back()->Destroy();
+        custom_sub_goal_progress.pop_back();
+    }
+}
+
 void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
 {
     int sub_goal_x_coor = 450;
+
+    resetUI();
 
     if (dynamic_cast<DefaultGoal*>(progress->getGoal()) != nullptr) {
         DefaultGoal* curr_goal = dynamic_cast<DefaultGoal*>(progress->getGoal());
@@ -174,10 +204,6 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
         title->SetLabel(progress_title);
 
         progress->setYCoor(120);
-        while (!sub_goal_checks.empty()) {
-            sub_goal_checks.back()->Destroy();
-            sub_goal_checks.pop_back();
-        }
         for (size_t i = 0; i < sub_goals->size(); i++) {
             if (dynamic_cast<DefaultGoal*>(sub_goals->at(i)) != nullptr) {
                 sub_goal_checks.push_back(new WGM_CheckBox(progress, 
@@ -221,23 +247,62 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
         for (size_t i = 0; i < sub_goals->size(); i++) {
             if (dynamic_cast<CustomGoal*>(sub_goals->at(i)) != nullptr) {
                 CustomGoal* curr_sub_goal = dynamic_cast<CustomGoal*>(sub_goals->at(i));
-                WGM_StaticText* sub_goal_title = new WGM_StaticText(this, wxID_ANY, curr_sub_goal->getName().c_str(), wxPoint(sub_goal_progress_title_x_coor, progress->getYCoor()), wxDefaultSize, wxALIGN_CENTER);
-                wxGauge* sub_goal_progress = new wxGauge(this, wxID_ANY, 100, wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), wxSize(230, 20), wxGA_HORIZONTAL);
+
+                /* sub goal titles */
+                custom_sub_goal_titles.push_back(new WGM_StaticText(this, 
+                                                                    wxID_ANY, 
+                                                                    curr_sub_goal->getName().c_str(), 
+                                                                    wxPoint(sub_goal_progress_title_x_coor, progress->getYCoor()), 
+                                                                    wxDefaultSize, 
+                                                                    wxALIGN_CENTER));
+                custom_sub_goal_progress.push_back(new wxGauge(this, 
+                                                               wxID_ANY, 
+                                                               100, 
+                                                               wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), 
+                                                               wxSize(230, 20), 
+                                                               wxGA_HORIZONTAL));
                 progress->setYCoor(progress->getYCoor() + 35);
-                WGM_StaticText* sub_goal_sub_title = new WGM_StaticText(this, WGM_NEXT_ID(), curr_sub_goal->getSubTitle().c_str(), wxPoint(sub_goal_progress_title_x_coor, progress->getYCoor()), wxDefaultSize, wxALIGN_CENTER);
-                //wxTextCtrl* text_box = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), wxSize(100, 20), wxBORDER_NONE | wxTE_PROCESS_ENTER);
-                slider = new wxSlider(this, WGM_NEXT_ID(), 0, 0, 100, wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), wxSize(100, 20), wxSL_HORIZONTAL);
-                slider->Bind(wxEVT_SCROLL_THUMBTRACK, &WGM_Driver::onSliderUpdate, this);
-                slider->Bind(wxEVT_SCROLL_CHANGED, &WGM_Driver::onSliderUpdate, this);
+                /*sub goal subtitles */
+                custom_sub_goal_titles.push_back(new WGM_StaticText(this,
+                                                                    WGM_NEXT_ID(),
+                                                                    curr_sub_goal->getSubTitle().c_str(),
+                                                                    wxPoint(sub_goal_progress_title_x_coor, progress->getYCoor()),
+                                                                    wxDefaultSize,
+                                                                    wxALIGN_CENTER));
+                custom_goal_slider_values.push_back(new WGM_TextCtrl(this, 
+                                                                     WGM_NEXT_ID(), 
+                                                                     wxString("0"), 
+                                                                     wxPoint(sub_goal_x_coor + 100, progress->getYCoor() + 3), 
+                                                                     wxSize(30, 20), 
+                                                                     wxTE_CENTRE | wxNO_BORDER));
+                custom_goal_sliders.push_back(new wxSlider(this, 
+                                                           WGM_NEXT_ID(), 
+                                                           0, 
+                                                           0, 
+                                                           100, 
+                                                           wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), 
+                                                           wxSize(100, 20), 
+                                                           wxSL_HORIZONTAL));
+                custom_goal_sliders.back()->Bind(wxEVT_SCROLL_THUMBTRACK, &WGM_Driver::onSliderUpdate, this);
+                custom_goal_sliders.back()->Bind(wxEVT_SCROLL_CHANGED, &WGM_Driver::onSliderUpdate, this);
+
                 progress->setYCoor(progress->getYCoor() + 35);
             }
         }
     }
 }
 
-void WGM_Driver::onSliderUpdate(wxCommandEvent& event)
+void WGM_Driver::onSliderUpdate(wxScrollEvent& event)
 {
-    int value = slider->GetValue();
+    for (size_t i = 0; i < custom_goal_sliders.size(); i++) {
+        if (event.GetEventObject() == custom_goal_sliders[i]) {
+            int value = custom_goal_sliders[i]->GetValue();
+            custom_goal_slider_values[i]->SetValue(wxString::Format("%d", value));
+            custom_goal_slider_values[i]->Refresh();
+
+            break;
+        }
+    }
 }
 
 void WGM_Driver::updateProgressBarGUI(WGM_Goal_Progress* updated_progress)

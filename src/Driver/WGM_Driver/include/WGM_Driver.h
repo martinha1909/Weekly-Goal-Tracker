@@ -12,13 +12,12 @@
 
 class WGM_Goal_Progress;
 class WGM_Button;
+class WGM_TextCtrl;
 
 class WGM_Driver : public wxFrame
 {
 private:
 	static WGM_Driver* instance;
-	std::vector<WGM_CheckBox*> sub_goal_checks;
-	std::vector<wxButton*> goals;
 	wxBoxSizer* main_sizer = nullptr;
 	wxBoxSizer* top_sizer = nullptr;
 	wxPanel* btn_panel = nullptr;
@@ -31,9 +30,15 @@ private:
 	wxComboBox* comboBox = nullptr;
 	WGM_StaticText* title = nullptr;
 	wxGauge* goal_progress = nullptr;
-	wxSlider* slider = nullptr;
+	std::vector<WGM_CheckBox*> sub_goal_checks;
+	std::vector<wxButton*> goals;
+	std::vector<wxSlider*> custom_goal_sliders;
+	std::vector<WGM_TextCtrl*> custom_goal_slider_values;
+	std::vector< WGM_StaticText*> custom_sub_goal_titles;
+	std::vector<wxGauge*> custom_sub_goal_progress;
 
 	void setUpDefaultButtons();
+	void resetUI();
 	WGM_Driver();
 public:
 	WGM_Driver(const WGM_Driver& other) = delete;
@@ -45,7 +50,7 @@ public:
 	void onRemoveGoal(wxCommandEvent& event);
 	void updateGoalGUI(WGM_Goal_Progress* progress);
 	void updateProgressBarGUI(WGM_Goal_Progress* updated_progress);
-	void onSliderUpdate(wxCommandEvent& event);
+	void onSliderUpdate(wxScrollEvent& event);
 
 	wxDECLARE_EVENT_TABLE();
 };
