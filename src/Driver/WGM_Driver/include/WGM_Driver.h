@@ -36,10 +36,13 @@ private:
 	std::vector<WGM_TextCtrl*> custom_goal_slider_values;
 	std::vector< WGM_StaticText*> custom_sub_goal_titles;
 	std::vector<wxGauge*> custom_sub_goal_progress;
+	std::vector<wxTimer*> auto_submit_timers;
+	std::vector<int> auto_submit_timer_ids;
 	//std::vector<WGM_Button*> sub_goal_update_progress_btns;
 
 	void setUpDefaultButtons();
 	void resetUI();
+	inline int getSliderIndexFromTimer(int timer_id);
 	WGM_Driver();
 public:
 	WGM_Driver(const WGM_Driver& other) = delete;
@@ -52,6 +55,7 @@ public:
 	void updateGoalGUI(WGM_Goal_Progress* progress);
 	void updateProgressBarGUI(WGM_Goal_Progress* updated_progress);
 	void onSliderUpdate(wxScrollEvent& event);
+	void onSliderAutoSubmit(wxTimerEvent& event);
 	void onSliderTextBoxEnter(wxCommandEvent& event);
 
 	wxDECLARE_EVENT_TABLE();

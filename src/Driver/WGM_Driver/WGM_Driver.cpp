@@ -175,11 +175,6 @@ void WGM_Driver::resetUI()
         custom_sub_goal_progress.back()->Destroy();
         custom_sub_goal_progress.pop_back();
     }
-
-    while (!sub_goal_update_progress_btns.empty()) {
-        sub_goal_update_progress_btns.back()->Destroy();
-        sub_goal_update_progress_btns.pop_back();
-    }
 }
 
 void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
@@ -251,6 +246,9 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
         for (size_t i = 0; i < sub_goals->size(); i++) {
             if (dynamic_cast<CustomGoal*>(sub_goals->at(i)) != nullptr) {
                 CustomGoal* curr_sub_goal = dynamic_cast<CustomGoal*>(sub_goals->at(i));
+                wxString tooltip = "Automatically updates " + std::to_string(SLIDER_AUTO_SUBMIT_TIMER / 1000) + " seconds";
+                const int auto_submit_timer_id = wxNewId();
+                wxTimer* auto_submit_timer = new wxTimer(this, auto_submit_timer_id);
 
                 /* sub goal titles */
                 custom_sub_goal_titles.push_back(new WGM_StaticText(this, 
@@ -289,12 +287,38 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
                                                            wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), 
                                                            wxSize(100, 20), 
                                                            wxSL_HORIZONTAL));
+                custom_goal_sliders.back()->SetToolTip(tooltip);
                 custom_goal_sliders.back()->Bind(wxEVT_SCROLL_THUMBTRACK, &WGM_Driver::onSliderUpdate, this);
                 custom_goal_sliders.back()->Bind(wxEVT_SCROLL_CHANGED, &WGM_Driver::onSliderUpdate, this);
+
+                auto_submit_timer_ids.push_back(auto_submit_timer_id);
+                auto_submit_timers.push_back(auto_submit_timer);
+
+                this->Bind(wxEVT_TIMER, &WGM_Driver::onSliderAutoSubmit, this, auto_submit_timer_id);
 
                 progress->setYCoor(progress->getYCoor() + 50);
             }
         }
+    }
+}
+
+inline int WGM_Driver::getSliderIndexFromTimer(int timer_id)
+{
+    for (size_t i = 0; i < auto_submit_timer_ids.size(); ++i) {
+        if (timer_id == auto_submit_timer_ids[i]) {
+            return static_cast<int>(i);
+        }
+    }
+    return -1;
+}
+
+void WGM_Driver::onSliderAutoSubmit(wxTimerEvent& event)
+{
+    int slider_id = getSliderIndexFromTimer(event.GetId());
+    if (slider_id != -1) {
+        wxString submissionMessage = wxString::Format("Slider %d submitted", slider_id);
+        wxLogMessage(submissionMessage);
+        auto_submit_timers[slider_id]->Stop();
     }
 }
 
@@ -324,19 +348,7 @@ void WGM_Driver::onSliderUpdate(wxScrollEvent& event)
 
             custom_goal_slider_values[i]->SetValue(wxString::Format("%d", value));
             custom_goal_slider_values[i]->Refresh();
-
-            /*if (value > 0) {
-                wxFont font(10, custom_goal_slider_values[i]->GetFont().GetFamily(), custom_goal_slider_values[i]->GetFont().GetStyle(), wxFONTWEIGHT_BOLD);
-
-                sub_goal_update_progress_btns.push_back(new WGM_Button(this,
-                                                                       this, 
-                                                                       WGM_NEXT_ID(), 
-                                                                       wxString("Update"), 
-                                                                       wxPoint(custom_goal_slider_values[i]->GetPosition().x + 50, custom_goal_slider_values[i]->GetPosition().y), 
-                                                                       wxSize(50, 20),
-                                                                       wxNO_BORDER));
-                sub_goal_update_progress_btns.back()->SetFont(font);
-            }*/
+            auto_submit_timers[i]->Start(SLIDER_AUTO_SUBMIT_TIMER);
 
             break;
         }

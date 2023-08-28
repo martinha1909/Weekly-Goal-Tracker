@@ -27,6 +27,7 @@
 
 /* miscellaneous */
 #define SLIDER_VALUE_MULTIPLIER_CAP         5 //Cap for max value of a slider
+#define SLIDER_AUTO_SUBMIT_TIMER            2000 // 2 seconds auto submit
 
 static int __cur_id = WGM_UNIQUE_ID_START;
 
