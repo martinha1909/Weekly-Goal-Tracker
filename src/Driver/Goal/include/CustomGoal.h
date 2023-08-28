@@ -17,6 +17,8 @@ public:
 	std::string& getSubTitle();
 	int getTotalGoal();
 	int getProgress();
+	int getCompletionProgress();
+	int getSubGoalCompletionProgress();
 	int getNumSubGoalsDone() override;
 	std::vector<Goal*>* getSubGoals() override;
 	void addSubGoal(Goal* goal) override;

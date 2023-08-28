@@ -59,6 +59,28 @@ int CustomGoal::getNumSubGoalsDone()
 	return num_sub_goals_done;
 }
 
+int CustomGoal::getCompletionProgress()
+{
+	if (progress >= total) {
+		return 100;
+	}
+
+	return (int)(((float)progress / (float)total) * 100);
+}
+
+int CustomGoal::getSubGoalCompletionProgress()
+{
+	int ret = (int)(((float)num_sub_goals_done / (float)sub_goals.size()) * 100);
+
+	if (ret >= 100) {
+		ret = 100;
+	} else if (ret <= 0) {
+		ret = 0;
+	}
+
+	return ret;
+}
+
 void CustomGoal::setNumSubGoalsDone(int num_done)
 {
 	num_sub_goals_done = num_done;

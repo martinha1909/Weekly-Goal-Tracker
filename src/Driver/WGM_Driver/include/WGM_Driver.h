@@ -18,11 +18,12 @@ class WGM_Driver : public wxFrame
 {
 private:
 	static WGM_Driver* instance;
-	wxBoxSizer* main_sizer = nullptr;
-	wxBoxSizer* top_sizer = nullptr;
+	Goal* current_goal = nullptr;
 	wxPanel* btn_panel = nullptr;
 	wxPanel* goal_panel = nullptr;
 	wxButton* add_goal_btn = nullptr;
+	wxBoxSizer* main_sizer = nullptr;
+	wxBoxSizer* top_sizer = nullptr;
 	wxBoxSizer* btn_sizer = nullptr;
 	wxBoxSizer* center_sizer = nullptr;
 	wxMenuBar* menu_bar = nullptr;
@@ -38,11 +39,11 @@ private:
 	std::vector<wxGauge*> custom_sub_goal_progress;
 	std::vector<wxTimer*> auto_submit_timers;
 	std::vector<int> auto_submit_timer_ids;
-	//std::vector<WGM_Button*> sub_goal_update_progress_btns;
 
 	void setUpDefaultButtons();
 	void resetUI();
 	inline int getSliderIndexFromTimer(int timer_id);
+	void updateCustomGoalProgressUI(int custom_sub_goal_id, int new_progress);
 	WGM_Driver();
 public:
 	WGM_Driver(const WGM_Driver& other) = delete;

@@ -83,12 +83,7 @@ void WGM_Driver::setUpDefaultButtons()
     Goal* finance = new CustomGoal("Finance", WGM_NEXT_ID());
     Goal* monthly_sub_goal = new CustomGoal("Monthly Spending", WGM_NEXT_ID(), 2200, "Enter expense");
     Goal* income_goal = new CustomGoal("Monthly Income", WGM_NEXT_ID(), 5000, "Enter income");
-    //Goal* weekly_sub_goal = new CustomGoal("Weekly", WGM_NEXT_ID(), 513);
-    //Goal* daily_sub_goal = new CustomGoal("Daily", WGM_NEXT_ID(), 73);
 
-    //weekly_sub_goal->addSubGoal(daily_sub_goal);
-
-    //monthly_sub_goal->addSubGoal(weekly_sub_goal);
     finance->addSubGoal(monthly_sub_goal);
     finance->addSubGoal(income_goal);
 
@@ -183,13 +178,14 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
     WGM_StaticText* sub_goal_header = nullptr;
 
     resetUI();
+    current_goal = progress->getGoal();
 
     progress->setYCoor(150);
     sub_goal_header = new WGM_StaticText(this, wxID_ANY, "Sub Goals", wxPoint(320, progress->getYCoor()), wxDefaultSize, wxALIGN_CENTER);
     sub_goal_header->SetForegroundColour(wxColour(255, 255, 255));
 
-    if (dynamic_cast<DefaultGoal*>(progress->getGoal()) != nullptr) {
-        DefaultGoal* curr_goal = dynamic_cast<DefaultGoal*>(progress->getGoal());
+    if (dynamic_cast<DefaultGoal*>(current_goal) != nullptr) {
+        DefaultGoal* curr_goal = dynamic_cast<DefaultGoal*>(current_goal);
         std::vector<Goal*>* sub_goals = curr_goal->getSubGoals();
         std::string progress_title = progress->getGoal()->getName() + 
                                      " (" +
@@ -221,10 +217,10 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
                 progress->setYCoor(progress->getYCoor() + 50);
             }
         }
-    } else if (dynamic_cast<CustomGoal*>(progress->getGoal()) != nullptr) {
+    } else if (dynamic_cast<CustomGoal*>(current_goal) != nullptr) {
         int sub_goal_progress_x_coor = 450;
         int sub_goal_progress_title_x_coor = 320;
-        CustomGoal* curr_goal = dynamic_cast<CustomGoal*>(progress->getGoal());
+        CustomGoal* curr_goal = dynamic_cast<CustomGoal*>(current_goal);
         std::vector<Goal*>* sub_goals = curr_goal->getSubGoals();
         std::string progress_title = progress->getGoal()->getName() +
             " (" +
@@ -238,7 +234,7 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
         }
 
         goal_progress = new wxGauge(this, wxID_ANY, 100, wxPoint(450, 80), wxSize(300, 20), wxGA_HORIZONTAL);
-        goal_progress->SetValue(progress->getCompletePercentage());
+        goal_progress->SetValue(curr_goal->getSubGoalCompletionProgress());
 
         title->SetLabel(progress_title);
 
@@ -263,6 +259,7 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
                                                                wxPoint(sub_goal_progress_x_coor, progress->getYCoor()), 
                                                                wxSize(230, 20), 
                                                                wxGA_HORIZONTAL));
+                custom_sub_goal_progress.back()->SetValue(curr_sub_goal->getCompletionProgress());
                 progress->setYCoor(progress->getYCoor() + 35);
                 /*sub goal subtitles */
                 custom_sub_goal_titles.push_back(new WGM_StaticText(this,
@@ -302,6 +299,37 @@ void WGM_Driver::updateGoalGUI(WGM_Goal_Progress* progress)
     }
 }
 
+void WGM_Driver::updateCustomGoalProgressUI(int custom_sub_goal_id, int new_progress)
+{
+    if (current_goal != nullptr && dynamic_cast<CustomGoal*>(current_goal) != nullptr) {
+        CustomGoal* curr_goal = dynamic_cast<CustomGoal*>(current_goal);
+        CustomGoal* curr_sub_goal = dynamic_cast<CustomGoal*>(curr_goal->getSubGoals()->at(custom_sub_goal_id));
+
+        if (curr_sub_goal != nullptr) {
+            curr_sub_goal->setProgress(new_progress);
+            custom_sub_goal_progress[custom_sub_goal_id]->SetValue(curr_sub_goal->getCompletionProgress());
+            custom_sub_goal_progress[custom_sub_goal_id]->Refresh();
+            if (curr_sub_goal->getCompletionProgress() == 100) {
+                curr_sub_goal->setComplete(true);
+                curr_goal->setNumSubGoalsDone(curr_goal->getNumSubGoalsDone() + 1);
+                goal_progress->SetValue(curr_goal->getSubGoalCompletionProgress());
+                goal_progress->Refresh();
+
+                if (curr_goal->getSubGoalCompletionProgress() >= 100) {
+                    curr_goal->setComplete(true);
+                }
+
+                title->SetLabel(curr_goal->getName() +
+                                " (" +
+                                std::to_string(curr_goal->getNumSubGoalsDone()) +
+                                " / " +
+                                std::to_string(curr_goal->getSubGoals()->size()) +
+                                ")");
+            }
+        }
+    }
+}
+
 inline int WGM_Driver::getSliderIndexFromTimer(int timer_id)
 {
     for (size_t i = 0; i < auto_submit_timer_ids.size(); ++i) {
@@ -316,8 +344,11 @@ void WGM_Driver::onSliderAutoSubmit(wxTimerEvent& event)
 {
     int slider_id = getSliderIndexFromTimer(event.GetId());
     if (slider_id != -1) {
-        wxString submissionMessage = wxString::Format("Slider %d submitted", slider_id);
-        wxLogMessage(submissionMessage);
+        if (current_goal != nullptr && dynamic_cast<CustomGoal*>(current_goal) != nullptr) {
+            CustomGoal* curr_goal = dynamic_cast<CustomGoal*>(current_goal);
+            CustomGoal* curr_sub_goal = dynamic_cast<CustomGoal*>(curr_goal->getSubGoals()->at(slider_id));
+            updateCustomGoalProgressUI(slider_id, curr_sub_goal->getProgress() + custom_goal_sliders[slider_id]->GetValue());
+        }
         auto_submit_timers[slider_id]->Stop();
     }
 }
@@ -326,14 +357,13 @@ void WGM_Driver::onSliderTextBoxEnter(wxCommandEvent& event)
 {
     for (size_t i = 0; i < custom_goal_slider_values.size(); i++) {
         if (event.GetEventObject() == custom_goal_slider_values[i]) {
+            CustomGoal* curr_goal = dynamic_cast<CustomGoal*>(current_goal);
+            CustomGoal* curr_sub_goal = dynamic_cast<CustomGoal*>(curr_goal->getSubGoals()->at(i));
             wxString text = custom_goal_slider_values[i]->GetValue();
             int value;
 
             if (text.ToInt(&value)) {
-                if (value >= custom_goal_sliders[i]->GetMin() && value <= custom_goal_sliders[i]->GetMax()) {
-                    custom_goal_sliders[i]->SetValue(value);
-                    custom_goal_sliders[i]->Refresh();
-                }
+                updateCustomGoalProgressUI(i, curr_sub_goal->getProgress() + value);
             }
             break;
         }
